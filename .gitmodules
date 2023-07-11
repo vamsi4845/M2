@@ -1,0 +1,5 @@
+
+[submodule "rollups/sovereign-labs/vm"]
+	path = rollups/sovereign-labs/vm
+	url = https://github.com/movemntdev/aptos-core
+	branch = sovereign-labs-rollup
