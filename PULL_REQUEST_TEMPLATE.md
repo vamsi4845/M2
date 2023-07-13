@@ -20,6 +20,7 @@
 
 ### Checklist
 <!-- Go through the checklist below and make sure all items are addressed -->
+- [ ] This commit represents a trivial change. (Ignore the rest).
 - [ ] I have read and followed the project's contributing guidelines.
 - [ ] I have tested the changes thoroughly.
 - [ ] My code follows the style and formatting guidelines of the project.
