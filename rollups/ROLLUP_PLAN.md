@@ -6,13 +6,13 @@
 
 <!-- DESCRIBE at a high-level your rollup technology. -->
 
-### How it works
+### How does it work?
 <!-- DESCRIBE how your chosen rollup technology works in detail. -->
 
-### How it will the VM be integrated
+### How will the VM be integrated?
 <!-- DESCRIBE how a Move VM (MoveVM or AptosVM) or other will be integrated into your chosen technology. -->
 
-### How is the rollup composed
+### How will the rollup be composed?
 <!-- DESCRIBE which technologies are responsible for which rollup functionality. -->
 
 #### Settlement and Fraud Proofs
