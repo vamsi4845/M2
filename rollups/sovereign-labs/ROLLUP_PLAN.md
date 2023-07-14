@@ -1,6 +1,6 @@
 # sovereign-labs-rollup
 <!-- DESCRIBE your rollup. -->
-sovereign-labs-rollup is a ZK succinct-proof Rollup built on the sovereign-labs SDK. If in develop we find RISC0 portability to be intractable or testing we find RISC0 proof generation to be too costly, we may convert to Rollkit for an optimistic rollup.
+`sovereign-labs-rollup` is a ZK succinct-proof Rollup built on the sovereign-labs SDK. If in develop we find RISC0 portability to be intractable or testing we find RISC0 proof generation to be too costly, we may convert to Rollkit for an optimistic rollup.
 
 ## Technology
 <!-- INCLUDE a UML diagram for key systems in your chosen technology and systems you will implement. Use whatever diagramming tool you like. Recommendation: https://www.lucidchart.com/pages/landing?utm_source=google&utm_medium=cpc&utm_campaign=_chart_en_us_mixed_search_brand_exact_&km_CPC_CampaignId=1457964857&km_CPC_AdGroupID=57044764032&km_CPC_Keyword=lucidchart&km_CPC_MatchType=e&km_CPC_ExtensionID=&km_CPC_Network=g&km_CPC_AdPosition=&km_CPC_Creative=442433231228&km_CPC_TargetID=aud-552508845082:kwd-33511936169&km_CPC_Country=9031914&km_CPC_Device=c&km_CPC_placement=&km_CPC_target=&gclid=CjwKCAjwwb6lBhBJEiwAbuVUSu8uD6Szuco3LffO7NHSA1hLah1873is1ZSpIaw3VPZnU--xD7NtqBoCiwIQAvD_BwE -->
