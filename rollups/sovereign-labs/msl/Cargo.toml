@@ -1,0 +1,29 @@
+[workspace]
+resolver = "2"
+members = [
+    "modules/sov-movevm",
+    "modules/sov-aptosvm",
+    "rollup",
+    "stf"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Liam Monninger <liam@movementlabs.xyz>"]
+homepage = "https://www.movementlabs.xyz"
+publish = false
+repository = "https://github.com/movemntdev/m2"
+rust-version = "1.66"
+
+[workspace.dependencies]
+# sovereign-sdk
+sov-rollup-interface = { path = "../../sovereign-sdk/sov-rollup-interface" }
+risc0-adapter = { path = "../../sovereign-sdk/adapters/risc0-adapter" }
+celestia-adapter = { path = "../../sovereign-sdk/adapters/celestia-adapter" }
+sov-modules-stf-template = { path = "../../sovereign-sdk/module-system/sov-modules-stf-template" }
+sov-modules-macros = { path = "../../sovereign-sdk/module-system/sov-modules-macros" }
+sov-state = { path = "../../sovereign-sdk/module-system/sov-state" }
+sov-modules-api = { path = "../../sovereign-sdk/module-system/sov-modules-api" }
+sov-first-read-last-write-cache = { path = "../../sovereign-sdk/module-system/utils/sov-first-read-last-write-cache" }
