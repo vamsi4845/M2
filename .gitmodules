@@ -1,5 +1,11 @@
-
-[submodule "rollups/sovereign-labs/vm"]
-	path = rollups/sovereign-labs/vm
+[submodule "rollups/sovereign-labs/sovereign-sdk"]
+	path = rollups/sovereign-labs/sovereign-sdk
+	url = https://github.com/movemntdev/sovereign-sdk
+[submodule "rollups/sovereign-labs/aptos-core"]
+	path = rollups/sovereign-labs/aptos-core
 	url = https://github.com/movemntdev/aptos-core
+	branch = sovereign-labs-rollup
+[submodule "rollups/sovereign-labs/move"]
+	path = rollups/sovereign-labs/move
+	url = https://github.com/movemntdev/move
 	branch = sovereign-labs-rollup
