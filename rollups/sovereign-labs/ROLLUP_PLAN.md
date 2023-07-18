@@ -70,16 +70,16 @@ At this stage, we only require sending the proofs and a transaction ids to Celes
 
 #### Features
 <!-- DESCRIBE the features your proof of concept will have. -->
-[] Aptos Execution
-[] Proofs of Aptos Execution
-[] Celestia proofs and counters.
+- [] Aptos Execution
+- [] Proofs of Aptos Execution
+- [] Celestia proofs and counters.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your proof of concept. Assign timelines to these milestones. Proof of concept development can include milestones that are simply related to getting your chosen technology to work in the appropriate manner. -->
-[x] Compile Hello World rollup with Aptos VM ping. (Demonstrates successful mereger of source.) [Day 2]
-[x] Run native Aptos executor upon rollup call. [Day 2]
-[] Complete STF. [Day 2]
-[] Submit proofs to Celestia. [Day 3]
+- [x] Compile Hello World rollup with Aptos VM ping. (Demonstrates successful mereger of source.) [Day 2]
+- [x] Run native Aptos executor upon rollup call. [Day 2]
+- [] Complete STF. [Day 2]
+- [] Submit proofs to Celestia. [Day 3]
 
 ### MVP
 <!-- DESCRIBE your plan to implement an MVP. -->
@@ -89,25 +89,25 @@ At this stage, we require sending the proofs and transactions to Celestia.
 
 #### Features
 <!-- DESCRIBE the features your MVP will have. -->
-[] Aptos Execution
-[] Proofs of Aptos Execution
-[] Celestia proofs and Aptos DB state.
-[] OR: some other solution for synchronizing Aptos DB state.
+- [] Aptos Execution
+- [] Proofs of Aptos Execution
+- [] Celestia proofs and Aptos DB state.
+- [] OR: some other solution for synchronizing Aptos DB state.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your MVP. Assign timelines to these milestones. -->
-[] End Aptos or Move VM experiment. [Day 2]
-[] Complete DA integration. [Day 4] --OR-- Aptos settlement [Day 3]
+- [] End Aptos or Move VM experiment. [Day 2]
+- [] Complete DA integration. [Day 4] --OR-- Aptos settlement [Day 3]
 
 ### MLP
 <!-- DESCRIBE your plan to implement an MLP. (Minimum Lovable Product) -->
 
 #### Features
 <!-- DESCRIBE the features your MLP will have. -->
-[] Aptos Execution
-[] Proofs of Aptos Execution.
-[] Celestia DA replacement for Aptos DB state.
-[] Direct inegration with `movement` CLI.
+- [] Aptos Execution
+- [] Proofs of Aptos Execution.
+- [] Celestia DA replacement for Aptos DB state.
+- [] Direct inegration with `movement` CLI.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your MLP. Assign timelines to these milestones. -->
