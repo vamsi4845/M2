@@ -93,6 +93,7 @@ At this stage, we require sending the proofs and transactions to Celestia.
 - [ ] Proofs of Aptos Execution
 - [ ] Celestia proofs and Aptos DB state.
 - [ ] OR: some other solution for synchronizing Aptos DB state.
+- [ ] Deployment at slab.m2.movementlabs.xyz
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your MVP. Assign timelines to these milestones. -->
