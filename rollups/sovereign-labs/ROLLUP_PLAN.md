@@ -6,21 +6,21 @@
 <!-- INCLUDE a UML diagram for key systems in your chosen technology and systems you will implement. Use whatever diagramming tool you like. Recommendation: https://www.lucidchart.com/pages/landing?utm_source=google&utm_medium=cpc&utm_campaign=_chart_en_us_mixed_search_brand_exact_&km_CPC_CampaignId=1457964857&km_CPC_AdGroupID=57044764032&km_CPC_Keyword=lucidchart&km_CPC_MatchType=e&km_CPC_ExtensionID=&km_CPC_Network=g&km_CPC_AdPosition=&km_CPC_Creative=442433231228&km_CPC_TargetID=aud-552508845082:kwd-33511936169&km_CPC_Country=9031914&km_CPC_Device=c&km_CPC_placement=&km_CPC_target=&gclid=CjwKCAjwwb6lBhBJEiwAbuVUSu8uD6Szuco3LffO7NHSA1hLah1873is1ZSpIaw3VPZnU--xD7NtqBoCiwIQAvD_BwE -->
 ![Sovereign Labs Rollup](./Sovereign%20Labs%20Rollup.png)
 
-<!-- DESCRIBE at a high-level your rollup technology. -->
+Ideally, we will be able to build a version of Move VM that runs on RISC0, in which case the rollup will work as illustrated above. Otherwise, we will run a pessimistic or partially optimistic rollup, in which case the RISC0 environment can be ignored in the diagram above.
 
 ### How does it work?
 <!-- DESCRIBE how your chosen rollup technology works in detail. -->
-The sovereign labs SDK is a tool for building rollups. It supports both ZK succinct rollups based on the RISC0 machine and optimistic rollups, based on the 
+The sovereign labs SDK is a tool for building rollups. It supports both ZK succinct rollups based on the RISC0 machine and optimistic rollups which can be "native" applications, i.e., do not run on the RISC0 `zkvm`.
 
 ### How will the VM be integrated?
 <!-- DESCRIBE how a Move VM (MoveVM or AptosVM) or other will be integrated into your chosen technology. -->
-The VM will be a program compiled for the RISC0 VM. We will first attempt to build this using Aptos VM. The state transition of the VM will rely on the Aptos executor. 
+The VM will ideally be a program compiled for the RISC0 VM, but a native implementation may be forced. We will first attempt to build this using Aptos VM. The state transition of the VM will rely on the Aptos executor. 
 
 For the proof of concept, whether the state of the Aptos DB will be represented in the Celestia DA or settlement will occur via Aptos remains outstanding. The complexity of syscalls from RISC0 versus the decomposability of the Aptos VM is the primary tradeoff.
 
 ### How will the rollup be composed?
 <!-- DESCRIBE which technologies are responsible for which rollup functionality. -->
-RISC0 is responsible for execution. The sovereign SDK is responsible for submittig proofs to Celestia. We should be able to tightly integrate Aptos VM with our Celestia data availability layer, in which case the RISC0's proofs server the function of settlement. If some other kind of settlement is needed, our first instinct will be to use Aptos VM.
+RISC0 would ideally be responsible for execution. The sovereign SDK is responsible for submittig proofs to Celestia. We should be able to tightly integrate Aptos VM with our Celestia data availability layer, in which case the RISC0's zk proofs or Sovereign Labs rollup fraud proofs serve the function of settlement. If some other kind of settlement is needed, our first instinct will be to use Aptos VM.
 
 #### Settlement and Fraud Proofs
 <!-- DESCRIBE how settlement and fraud proving will be handled. -->
@@ -70,15 +70,16 @@ At this stage, we only require sending the proofs and a transaction ids to Celes
 
 #### Features
 <!-- DESCRIBE the features your proof of concept will have. -->
-- Aptos Execution
-- Proofs of Aptos Execution
-- Celestia proofs and counters.
+[] Aptos Execution
+[] Proofs of Aptos Execution
+[] Celestia proofs and counters.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your proof of concept. Assign timelines to these milestones. Proof of concept development can include milestones that are simply related to getting your chosen technology to work in the appropriate manner. -->
-1. Compile Hello World rollup with Aptos VM ping. (Demonstrates successful mereger of source.) [Day 2]
-2. Run Aptos executor upon rollup call. [Day 3]
-3. Submit proofs and counter to Celestia. [Day 4]
+[x] Compile Hello World rollup with Aptos VM ping. (Demonstrates successful mereger of source.) [Day 2]
+[x] Run native Aptos executor upon rollup call. [Day 2]
+[] Complete STF. [Day 2]
+[] Submit proofs to Celestia. [Day 3]
 
 ### MVP
 <!-- DESCRIBE your plan to implement an MVP. -->
@@ -88,21 +89,25 @@ At this stage, we require sending the proofs and transactions to Celestia.
 
 #### Features
 <!-- DESCRIBE the features your MVP will have. -->
-- Aptos Execution
-- Proofs of Aptos Execution
-- Celestia proofs and Aptos DB state.
-- OR: some other solution for synchronizing Aptos DB state.
+[] Aptos Execution
+[] Proofs of Aptos Execution
+[] Celestia proofs and Aptos DB state.
+[] OR: some other solution for synchronizing Aptos DB state.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your MVP. Assign timelines to these milestones. -->
-1. Proven Aptos VM execution. [Day 2]
-2. DA integration. [Day 4] --OR-- Aptos settlement [Day 3]
+[] End Aptos or Move VM experiment. [Day 2]
+[] Complete DA integration. [Day 4] --OR-- Aptos settlement [Day 3]
 
 ### MLP
 <!-- DESCRIBE your plan to implement an MLP. (Minimum Lovable Product) -->
 
 #### Features
 <!-- DESCRIBE the features your MLP will have. -->
+[] Aptos Execution
+[] Proofs of Aptos Execution.
+[] Celestia DA replacement for Aptos DB state.
+[] Direct inegration with `movement` CLI.
 
 #### Milestones
 <!-- DESCRIBE a list of milestones for your MLP. Assign timelines to these milestones. -->
