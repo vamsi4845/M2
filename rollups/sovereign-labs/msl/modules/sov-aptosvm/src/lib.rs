@@ -10,65 +10,64 @@ pub mod query;
 #[cfg(feature = "experimental")]
 #[cfg(test)]
 mod tests;
-#[cfg(feature = "experimental")]
-pub use experimental::{AccountData, Evm, EvmConfig};
 
 #[cfg(feature = "experimental")]
-mod experimental {
-    use revm::primitives::{KECCAK_EMPTY, U256};
+pub use aptos_experimental::{AptosVm, AptosVmConfig};
+
+#[cfg(feature = "experimental")]
+extern crate dirs;
+
+#[cfg(feature = "experimental")]
+mod aptos_experimental {
+
+    use anyhow::anyhow;
+
     use sov_modules_api::Error;
     use sov_modules_macros::ModuleInfo;
     use sov_state::WorkingSet;
 
-    use super::evm::db::EvmDb;
-    use super::evm::transaction::BlockEnv;
-    use super::evm::{DbAccount, EthAddress};
-    use crate::evm::{Bytes32, EvmTransaction};
+    use aptos_types::transaction::{Transaction};
+    use aptos_db::AptosDB;
+    use aptos_storage_interface::DbReaderWriter;
+    use aptos_types::validator_signer::ValidatorSigner;
+
+    use aptos_executor::block_executor::BlockExecutor;
+    use aptos_executor::db_bootstrapper::{generate_waypoint, maybe_bootstrap};
+    use aptos_executor_types::BlockExecutorTrait;
+    use aptos_vm::AptosVM;
+    // use anyhow::{Error};
+
+    use borsh::{BorshDeserialize, BorshSerialize};
+
+    use std::sync::Arc;
 
     #[derive(Clone)]
-    pub struct AccountData {
-        pub address: EthAddress,
-        pub balance: Bytes32,
-        pub code_hash: Bytes32,
-        pub code: Vec<u8>,
-        pub nonce: u64,
-    }
-
-    impl AccountData {
-        pub fn empty_code() -> [u8; 32] {
-            KECCAK_EMPTY.to_fixed_bytes()
-        }
-
-        pub fn balance(balance: u64) -> Bytes32 {
-            U256::from(balance).to_le_bytes()
-        }
-    }
-
-    #[derive(Clone)]
-    pub struct EvmConfig {
-        pub data: Vec<AccountData>,
+    pub struct AptosVmConfig {
+        pub data: Vec<u8>,
     }
 
     #[allow(dead_code)]
     #[derive(ModuleInfo, Clone)]
-    pub struct Evm<C: sov_modules_api::Context> {
+    pub struct AptosVm<C: sov_modules_api::Context> {
         #[address]
         pub(crate) address: C::Address,
 
         #[state]
-        pub(crate) accounts: sov_state::StateMap<EthAddress, DbAccount>,
+        pub(crate) db_path: sov_state::StateValue<String>,
 
+        // TODO: this may be redundant with address
         #[state]
-        pub(crate) block_env: sov_state::StateValue<BlockEnv>,
+        pub(crate) validator_signer: sov_state::StateValue<Vec<u8>>, // TODO: fix validator signer incompatability
 
+        // This is string because we are using transaction.hash: https://github.com/movemntdev/aptos-core/blob/112ad6d8e229a19cfe471153b2fd48f1f22b9684/crates/indexer/src/models/transactions.rs#L31
         #[state]
-        pub(crate) transactions: sov_state::StateMap<Bytes32, EvmTransaction>,
+        pub(crate) transactions: sov_state::StateMap<String, Vec<u8>>, // TODO: fix Transaction serialiation incompatability
     }
 
-    impl<C: sov_modules_api::Context> sov_modules_api::Module for Evm<C> {
+    impl<C: sov_modules_api::Context> sov_modules_api::Module for AptosVm<C> {
         type Context = C;
 
-        type Config = EvmConfig;
+        type Config = AptosVmConfig;
 
         type CallMessage = super::call::CallMessage;
 
@@ -77,7 +76,9 @@ mod experimental {
             config: &Self::Config,
             working_set: &mut WorkingSet<C::Storage>,
         ) -> Result<(), Error> {
+
             Ok(self.init_module(config, working_set)?)
+
         }
 
         fn call(
@@ -86,16 +87,46 @@ mod experimental {
             context: &Self::Context,
             working_set: &mut WorkingSet<C::Storage>,
         ) -> Result<sov_modules_api::CallResponse, Error> {
-            Ok(self.execute_call(msg.tx, context, working_set)?)
+
+            Ok(self.execute_call(msg.serialized_tx, context, working_set)?)
+
         }
     }
 
-    impl<C: sov_modules_api::Context> Evm<C> {
-        pub(crate) fn get_db<'a>(
+ 
+
+    impl<C: sov_modules_api::Context> AptosVm<C> {
+
+        pub(crate) fn get_db(
             &self,
-            working_set: &'a mut WorkingSet<C::Storage>,
-        ) -> EvmDb<'a, C> {
-            EvmDb::new(self.accounts.clone(), working_set)
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            DbReaderWriter, 
+            Error
+        > {
+
+            let path = self.db_path.get(working_set).ok_or(
+                anyhow::Error::msg("Database path is not set.")
+            )?;
+            // TODO: swap for non-test db
+            // TODO: swap for celestia DA
+            Ok(DbReaderWriter::new(AptosDB::new_for_sov(path.as_str())))
+
         }
+
+        pub(crate) fn get_executor(
+            &self,
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            BlockExecutor<AptosVM>, 
+            Error
+        > {
+
+            let db = self.get_db(working_set)?;
+            Ok(BlockExecutor::new(db.clone()))
+
+        }
+
     }
+
 }

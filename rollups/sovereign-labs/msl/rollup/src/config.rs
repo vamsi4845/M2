@@ -1,4 +1,4 @@
-use demo_stf::runner_config::Config as RunnerConfig;
+use stf::runner_config::Config as RunnerConfig;
 use jupiter::da_service::DaServiceConfig;
 use serde::Deserialize;
 

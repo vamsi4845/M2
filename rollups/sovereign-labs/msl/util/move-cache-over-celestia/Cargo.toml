@@ -1,0 +1,21 @@
+[package]
+name = "move-cache-over-celestia"
+description = "Implements the move cache over celestia"
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+version = { workspace = true }
+readme = "README.md"
+resolver = "2"
+
+
+[dependencies]
+# TODO: resolve move-vm aptos incompatabilites for workspace
+# move-vm-runtime = { workspace = true }
+# move-vm-types = { workspace = true }
+move-vm-runtime = { path = "../../../move/language/move-vm/runtime" }
+move-vm-types = { path = "../../../move/language/move-vm/types"}
+jupiter = { workspace = true }

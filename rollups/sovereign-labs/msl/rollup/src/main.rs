@@ -3,13 +3,13 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 
 use anyhow::Context;
-use const_rollup_config::{ROLLUP_NAMESPACE_RAW, SEQUENCER_DA_ADDRESS};
-use demo_stf::app::{
+use rollup_config::{ROLLUP_NAMESPACE_RAW, SEQUENCER_DA_ADDRESS};
+use stf::app::{
     DefaultContext, DefaultPrivateKey, DemoBatchReceipt, DemoTxReceipt, NativeAppRunner,
 };
-use demo_stf::genesis_config::create_demo_genesis_config;
-use demo_stf::runner_config::from_toml_path;
-use demo_stf::runtime::{get_rpc_methods, GenesisConfig};
+use stf::genesis_config::create_demo_genesis_config;
+use stf::runner_config::from_toml_path;
+use stf::runtime::{get_rpc_methods, GenesisConfig};
 use jsonrpsee::core::server::rpc_module::Methods;
 use jupiter::da_service::CelestiaService;
 use jupiter::types::NamespaceId;
