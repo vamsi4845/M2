@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*use anvil_core::eth::transaction::EthTransactionRequest;
+=======
+use anvil_core::eth::transaction::EthTransactionRequest;
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 use ethereum_types::{Address, H256, U256, U64};
 use ethers_core::types::{Block, BlockId, FeeHistory, Transaction, TransactionReceipt, TxHash};
 use sov_modules_macros::rpc_gen;
@@ -86,4 +90,8 @@ impl<C: sov_modules_api::Context> Evm<C> {
     ) -> Option<U256> {
         unimplemented!("eth_getTransactionCount not implemented")
     }
+<<<<<<< HEAD
 }*/
+=======
+}
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236

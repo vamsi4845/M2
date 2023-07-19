@@ -2,6 +2,7 @@ use anyhow::Result;
 use revm::primitives::CfgEnv;
 use sov_modules_api::CallResponse;
 use sov_state::WorkingSet;
+<<<<<<< HEAD
 use serde_json;
 use aptos_crypto::hash::CryptoHash;
 
@@ -35,6 +36,13 @@ use aptos_types::transaction::{Transaction};
 
 use borsh::{BorshDeserialize, BorshSerialize};
 
+=======
+
+use crate::evm::db::EvmDb;
+use crate::evm::executor::{self};
+use crate::evm::transaction::EvmTransaction;
+use crate::Evm;
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 #[cfg_attr(
     feature = "native",
@@ -43,6 +51,7 @@ use borsh::{BorshDeserialize, BorshSerialize};
 )]
 #[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
 pub struct CallMessage {
+<<<<<<< HEAD
     pub serialized_tx: Vec<u8>,
 }
 
@@ -70,6 +79,27 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
         // TODO: may want to use a lower level of execution abstraction
         // TODO: see https://github.com/movemntdev/aptos-core/blob/main/aptos-move/block-executor/src/executor.rs#L73
         // TODO: for an entrpoint that does not require a block.
+=======
+    pub tx: EvmTransaction,
+}
+
+impl<C: sov_modules_api::Context> Evm<C> {
+    pub(crate) fn execute_call(
+        &self,
+        tx: EvmTransaction,
+        _context: &C,
+        working_set: &mut WorkingSet<C::Storage>,
+    ) -> Result<CallResponse> {
+        let cfg_env = CfgEnv::default();
+        let block_env = self.block_env.get(working_set).unwrap_or_default();
+
+        self.transactions.set(&tx.hash, &tx, working_set);
+
+        let evm_db: EvmDb<'_, C> = self.get_db(working_set);
+
+        // It is ok to use the unwrap here because the error type is `Infallible`.
+        let result = executor::execute_tx(evm_db, block_env, tx, cfg_env).unwrap();
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
         println!("Result {:?}", result);
         Ok(CallResponse::default())

@@ -3,8 +3,13 @@ use std::future::Future;
 use std::pin::Pin;
 
 use borsh::ser::BorshSerialize;
+<<<<<<< HEAD
 use rollup_config::SEQUENCER_DA_ADDRESS;
 use stf::runtime::Runtime;
+=======
+use const_rollup_config::SEQUENCER_DA_ADDRESS;
+use demo_stf::runtime::Runtime;
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 use jupiter::verifier::address::CelestiaAddress;
 use sov_bank::call::CallMessage;
 use sov_bank::Coins;
@@ -27,7 +32,11 @@ fn generate_transfers(n: usize, start_nonce: u64) -> Vec<u8> {
             .unwrap_or_else(|_e| panic!("Failed generating transfers")),
     );
     let token_address =
+<<<<<<< HEAD
         sov_bank::get_token_address::<DefaultContext>(token_name, sa.as_ref(), 11);
+=======
+        sov_bank::create_token_address::<DefaultContext>(token_name, sa.as_ref(), 11);
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
     let mut message_vec = vec![];
     for i in 1..(n + 1) {
         let priv_key = DefaultPrivateKey::generate();

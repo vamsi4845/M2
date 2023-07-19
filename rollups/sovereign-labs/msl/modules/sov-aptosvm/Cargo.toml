@@ -13,12 +13,20 @@ resolver = "2"
 
 
 [dependencies]
+<<<<<<< HEAD
 dirs = "5.0"
 revm = "3.3.0"
 sov-modules-api = { workspace = true }
 sov-modules-macros = { workspace = true }
 sov-state = { workspace = true  }
 sov-rollup-interface = { workspace = true }
+=======
+revm = "3.3.0"
+sov-modules-api = { path = "../../sov-modules-api", version = "0.1", default-features = false }
+sov-modules-macros = { path = "../../sov-modules-macros", version = "0.1" }
+sov-state = { path = "../../sov-state", version = "0.1", default-features = false }
+sov-rollup-interface = { path = "../../../rollup-interface", version = "0.1" }
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 anyhow = { workspace = true }
 bytes = { workspace = true }
@@ -41,6 +49,7 @@ ethers-signers = { version = "2.0.7", default-features = false }
 anvil-core  = { workspace = true }
 ethers = { workspace = true }
 
+<<<<<<< HEAD
 # aptos
 aptos-api = { workspace = true }
 aptos-api-types = { workspace = true }
@@ -56,6 +65,8 @@ aptos-vm-genesis = { workspace = true }
 aptos-state-view = { workspace = true }
 aptos-storage-interface = { workspace = true }
 
+=======
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 [dev-dependencies]
 anvil  = { workspace = true }
 primitive-types = "0.12.1"
@@ -63,7 +74,11 @@ tokio = { workspace = true }
 tempfile = { workspace = true }
 bytes = { workspace = true }
 
+<<<<<<< HEAD
 sov-modules-api = { workspace = true }
+=======
+sov-modules-api = { path = "../../sov-modules-api", version = "0.1" }
+>>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 [features]
 default = ["native"]
