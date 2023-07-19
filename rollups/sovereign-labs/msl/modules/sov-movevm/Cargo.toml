@@ -14,17 +14,10 @@ resolver = "2"
 
 [dependencies]
 revm = "3.3.0"
-<<<<<<< HEAD
 sov-modules-api = { workspace = true }
 sov-modules-macros = { workspace = true }
 sov-state = { workspace = true  }
 sov-rollup-interface = { workspace = true }
-=======
-sov-modules-api = { path = "../../sov-modules-api", version = "0.1", default-features = false }
-sov-modules-macros = { path = "../../sov-modules-macros", version = "0.1" }
-sov-state = { path = "../../sov-state", version = "0.1", default-features = false }
-sov-rollup-interface = { path = "../../../rollup-interface", version = "0.1" }
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 anyhow = { workspace = true }
 bytes = { workspace = true }
@@ -54,11 +47,7 @@ tokio = { workspace = true }
 tempfile = { workspace = true }
 bytes = { workspace = true }
 
-<<<<<<< HEAD
 sov-modules-api = { workspace = true }
-=======
-sov-modules-api = { path = "../../sov-modules-api", version = "0.1" }
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 [features]
 default = ["native"]

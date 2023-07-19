@@ -1,9 +1,5 @@
 [package]
-<<<<<<< HEAD
 name = "rollup"
-=======
-name = "sov-demo-rollup"
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 version = { workspace = true }
 edition = { workspace = true }
 authors = { workspace = true }
@@ -28,7 +24,6 @@ futures = "0.3"
 tokio = { workspace = true }
 tracing-subscriber = "0.3.17"
 
-<<<<<<< HEAD
 jupiter = { workspace = true }
 risc0-adapter = { workspace = true }
 sov-modules-stf-template = { workspace = true }
@@ -45,23 +40,6 @@ sov-value-setter = { workspace = true, default-features = false }
 sov-modules-api = { workspace = true, features = ["native"] }
 sov-state = { workspace = true, features = ["native"] }
 rollup-config = { path = "../rollup-config" }
-=======
-jupiter = { path = "../../adapters/celestia" }
-demo-stf = { path = "../demo-stf", features = ["native"] }
-sov-rollup-interface = { path = "../../rollup-interface" }
-sov-db = { path = "../../full-node/db/sov-db" }
-sov-ethereum = { path = "../../full-node/sov-ethereum", optional = true }
-sov-sequencer = { path = "../../full-node/sov-sequencer" }
-risc0-adapter = { path = "../../adapters/risc0" }
-sov-modules-stf-template = { path = "../../module-system/sov-modules-stf-template" }
-
-sov-bank = { path = "../../module-system/module-implementations/sov-bank", default-features = false }
-sov-election = { path = "../../module-system/module-implementations/examples/sov-election", default-features = false }
-sov-value-setter = { path = "../../module-system/module-implementations/examples/sov-value-setter", default-features = false }
-sov-modules-api = { path = "../../module-system/sov-modules-api", features = ["native"] }
-sov-state = { path = "../../module-system/sov-state", features = ["native"] }
-const-rollup-config = { path = "../const-rollup-config" }
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 
 [dev-dependencies]
 sha2 = { workspace = true }
@@ -70,11 +48,7 @@ tendermint = "0.32"
 tempfile = { workspace = true }
 proptest = { workspace = true }
 clap = { workspace = true }
-<<<<<<< HEAD
 sov-rollup-interface = { workspace = true, features = ["fuzzing"] }
-=======
-sov-rollup-interface = { path = "../../rollup-interface", features = ["fuzzing"] }
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 prometheus = "0.11.0"
 prettytable-rs = "^0.10"
 criterion = "0.5.1"
