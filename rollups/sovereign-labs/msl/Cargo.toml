@@ -1,0 +1,97 @@
+[workspace]
+resolver = "2"
+members = [
+    "modules/sov-movevm",
+    "modules/sov-aptosvm",
+    "rollup",
+    "stf",
+    "rollup-config",
+    # "util/move-cache-over-celestia",
+    "util/aptos-db-over-celestia"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Liam Monninger <liam@movementlabs.xyz>"]
+homepage = "https://www.movementlabs.xyz"
+publish = false
+repository = "https://github.com/movemntdev/m2"
+rust-version = "1.66"
+
+[workspace.dependencies]
+# aptos
+aptos-api = { path = "../aptos-core/api" }
+aptos-api-types = { path = "../aptos-core/api/types" }
+aptos-mempool = { path = "../aptos-core/mempool" }
+aptos-crypto = { path = "../aptos-core/crates/aptos-crypto" }
+aptos-db = { path = "../aptos-core/storage/aptosdb" }
+aptos-executor = { path = "../aptos-core/execution/executor" }
+aptos-executor-types = { path = "../aptos-core/execution/executor-types" }
+aptos-sdk = { path = "../aptos-core/sdk" }
+aptos-types = { path = "../aptos-core/types" }
+aptos-vm = { path = "../aptos-core/aptos-move/aptos-vm" }
+aptos-vm-genesis = { path = "../aptos-core/aptos-move/vm-genesis" }
+aptos-state-view = { path = "../aptos-core/storage/state-view" }
+aptos-storage-interface = { path = "../aptos-core/storage/storage-interface" }
+
+
+# sovereign-sdk
+sov-rollup-interface = { path = "../sovereign-sdk/rollup-interface" }
+risc0-adapter = { path = "../sovereign-sdk/adapters/risc0" }
+jupiter = { path = "../sovereign-sdk/adapters/celestia" }
+sov-modules-stf-template = { path = "../sovereign-sdk/module-system/sov-modules-stf-template" }
+sov-modules-macros = { path = "../sovereign-sdk/module-system/sov-modules-macros" }
+sov-state = { path = "../sovereign-sdk/module-system/sov-state" }
+sov-modules-api = { path = "../sovereign-sdk/module-system/sov-modules-api" }
+sov-first-read-last-write-cache = { path = "../sovereign-sdk/module-system/utils/sov-first-read-last-write-cache" }
+
+sov-value-setter = { path = "../sovereign-sdk/module-system/module-implementations/examples/sov-value-setter" }
+sov-accounts = { path = "../sovereign-sdk/module-system/module-implementations/sov-accounts"}
+sov-sequencer-registry = { path = "../sovereign-sdk/module-system/module-implementations/sov-sequencer-registry"}
+
+sov-db = { path = "../sovereign-sdk/full-node/db/sov-db" }
+sov-schema-db = { path = "../sovereign-sdk/full-node/db/sov-schema-db"}
+sov-ethereum = { path = "../sovereign-sdk/full-node/sov-ethereum" }
+sov-sequencer = { path = "../sovereign-sdk/full-node/sov-sequencer" }
+sov-evm = { path = "../sovereign-sdk/module-system/module-implementations/sov-evm"}
+
+sov-bank = { path = "../sovereign-sdk/module-system/module-implementations/sov-bank" }
+sov-election = { path = "../sovereign-sdk/module-system/module-implementations/examples/sov-election" }
+
+# sovereign workspace
+# Dependencies maintained by sovereign
+jmt = "0.6.0"
+
+# External dependencies
+anyhow = "1.0.68"
+borsh = { version = "0.10.3", features = ["rc", "bytes"] }
+byteorder = "1.4.3"
+bytes = "1.2.1"
+hex = "0.4.3"
+once_cell = "1.10.0"
+prometheus = { version = "0.13.3", default-features = false }
+proptest = "1.0.0"
+proptest-derive = "0.3.0"
+rand = "0.8"
+rayon = "1.5.2"
+rocksdb = { version = "0.21.0", features = ["lz4"] }
+serde = { version = "1.0.137", features = ["derive", "rc"] }
+serde_json = { version = "1.0" }
+sha2 = "0.10.6"
+digest = "0.10.6"
+thiserror = "1.0.38"
+tiny-keccak = "2.0.2"
+tracing = "0.1.37"
+bech32 = "0.9.1"
+derive_more = "0.99.11"
+clap = { version = "4.2.7", features = ["derive"] }
+toml = "0.7.3"
+jsonrpsee = "0.16.2"
+tempfile = "3.5"
+tokio = { version = "1", features = ["full"] }
+
+ethers = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
+anvil  = { git = "https://github.com/foundry-rs/foundry", version = "0.1.0" }
+anvil-core = { git = "https://github.com/foundry-rs/foundry", features = ["fastrlp", "serde"], version = "0.1.0" }

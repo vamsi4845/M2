@@ -1,0 +1,75 @@
+[package]
+name = "stf"
+version = { workspace = true }
+edition = { workspace = true }
+resolver = "2"
+authors = { workspace = true }
+homepage = "sovereign.xyz"
+publish = false
+
+[[bin]]
+name = "sov-cli"
+path = "src/sov-cli/main.rs"
+required-features = ["native"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+borsh = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true, optional = true }
+sha2 = { workspace = true }
+clap = { workspace = true, optional = true }
+toml = { workspace = true, optional = true }
+jsonrpsee = { workspace = true, features = ["http-client", "server"], optional = true }
+tokio = { workspace = true, optional = true }
+hex = { workspace = true }
+tracing = { workspace = true }
+
+sov-rollup-interface = { workspace = true }
+sov-election = { workspace = true, default-features = false }
+sov-sequencer-registry = { workspace = true , default-features = false }
+sov-bank = { workspace = true, default-features = false }
+sov-modules-stf-template = { workspace = true } # no features available
+sov-value-setter = { workspace = true, default-features = false }
+sov-accounts = { workspace = true, default-features = false}
+sov-state = { workspace = true, default-features = false }
+sov-modules-api = { workspace = true, default-features = false }
+sov-modules-macros = { workspace = true }
+# Only enable the db on "native" feature
+sov-schema-db = { workspace = true, optional = true }
+sov-db = { workspace = true, optional = true }
+rollup-config = { path = "../rollup-config" }
+sov-sequencer = { workspace = true, optional = true }
+
+# Only enable the evm on "experimental" feature
+sov-evm = { workspace = true, default-features = false, optional = true}
+
+[dev-dependencies]
+sov-rollup-interface = { workspace = true, features = ["mocks"] }
+tempfile = { workspace = true }
+rand = "0.8"
+
+[features]
+default = ["native"]
+experimental =["sov-evm/experimental"]
+
+
+native = [
+    "dep:sov-db",
+    "dep:sov-schema-db",
+    "sov-bank/native",
+    "sov-accounts/native",
+    "sov-election/native",
+    "sov-sequencer-registry/native",
+    "sov-value-setter/native",
+    "sov-modules-api/native",
+    "sov-rollup-interface/mocks",
+    "sov-sequencer",
+    "clap",
+    "serde_json",
+    "jsonrpsee",
+    "tokio",
+    "toml"]
+verifier = []

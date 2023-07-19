@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./modules/sov-aptosvm/Cargo.toml"
+    ],
+    "rust-analyzer.cargo.features": "all"
+}

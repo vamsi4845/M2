@@ -1,0 +1,62 @@
+[package]
+name = "rollup"
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+homepage = "sovereign.xyz"
+publish = false
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+borsh = { workspace = true, features = ["bytes"] }
+jsonrpsee = { workspace = true, features = ["http-client", "server"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+hex = { workspace = true }
+bytes = { workspace = true }
+futures = "0.3"
+
+# Crates which only this package depends on 
+tokio = { workspace = true }
+tracing-subscriber = "0.3.17"
+
+jupiter = { workspace = true }
+risc0-adapter = { workspace = true }
+sov-modules-stf-template = { workspace = true }
+sov-rollup-interface = { workspace = true }
+
+stf = { path = "../stf", features = ["native"] }
+sov-db = { workspace = true }
+sov-ethereum = { workspace = true, optional = true }
+sov-sequencer = { workspace = true }
+
+sov-bank = { workspace = true, default-features = false }
+sov-election = { workspace = true, default-features = false }
+sov-value-setter = { workspace = true, default-features = false }
+sov-modules-api = { workspace = true, features = ["native"] }
+sov-state = { workspace = true, features = ["native"] }
+rollup-config = { path = "../rollup-config" }
+
+[dev-dependencies]
+sha2 = { workspace = true }
+reqwest = "0.11"
+tendermint = "0.32"
+tempfile = { workspace = true }
+proptest = { workspace = true }
+clap = { workspace = true }
+sov-rollup-interface = { workspace = true, features = ["fuzzing"] }
+prometheus = "0.11.0"
+prettytable-rs = "^0.10"
+criterion = "0.5.1"
+
+[[bench]]
+name = "rollup_bench"
+harness = false
+
+[[bench]]
+name = "rollup_coarse_measure"
+harness = false
