@@ -1,6 +1,5 @@
 use anyhow::Result;
 use sov_state::WorkingSet;
-<<<<<<< HEAD
 use crate::{AptosVm};
 
 use aptos_api_types::{Address, EncodeSubmissionRequest, IdentifierWrapper, MoveStructTag, RawTableItemRequest, StateKeyWrapper, TableItemRequest, ViewRequest};
@@ -29,20 +28,11 @@ const MOVE_DB_DIR: &str = ".move-chain-data";
 impl<C: sov_modules_api::Context> AptosVm<C> {
 
 
-=======
-
-use crate::evm::db_init::InitEvmDb;
-use crate::evm::AccountInfo;
-use crate::Evm;
-
-impl<C: sov_modules_api::Context> Evm<C> {
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
     pub(crate) fn init_module(
         &self,
         config: &<Self as sov_modules_api::Module>::Config,
         working_set: &mut WorkingSet<C::Storage>,
     ) -> Result<()> {
-<<<<<<< HEAD
     
         // get the validator signer  
         let (genesis, validators) = test_genesis_change_set_and_validators(Some(1));
@@ -82,22 +72,3 @@ impl<C: sov_modules_api::Context> Evm<C> {
     }
 
 }
-
-=======
-        let mut evm_db = self.get_db(working_set);
-
-        for acc in &config.data {
-            evm_db.insert_account_info(
-                acc.address,
-                AccountInfo {
-                    balance: acc.balance,
-                    code_hash: acc.code_hash,
-                    code: acc.code.clone(),
-                    nonce: acc.nonce,
-                },
-            )
-        }
-        Ok(())
-    }
-}
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
