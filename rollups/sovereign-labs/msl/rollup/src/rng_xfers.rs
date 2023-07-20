@@ -3,13 +3,8 @@ use std::future::Future;
 use std::pin::Pin;
 
 use borsh::ser::BorshSerialize;
-<<<<<<< HEAD
 use rollup_config::SEQUENCER_DA_ADDRESS;
 use stf::runtime::Runtime;
-=======
-use const_rollup_config::SEQUENCER_DA_ADDRESS;
-use demo_stf::runtime::Runtime;
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 use jupiter::verifier::address::CelestiaAddress;
 use sov_bank::call::CallMessage;
 use sov_bank::Coins;

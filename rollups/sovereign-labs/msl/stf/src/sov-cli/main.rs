@@ -6,13 +6,8 @@ use std::{fs, vec};
 use anyhow::Context;
 use borsh::BorshSerialize;
 use clap::Parser;
-<<<<<<< HEAD
 use rollup_config::ROLLUP_NAMESPACE_RAW;
 use stf::runtime::cmd_parser;
-=======
-use const_rollup_config::ROLLUP_NAMESPACE_RAW;
-use demo_stf::runtime::cmd_parser;
->>>>>>> d0c9acb70a30c9f4e7b360459890efc3e9f1b236
 use jsonrpsee::core::client::ClientT;
 use jsonrpsee::http_client::HttpClientBuilder;
 use sov_modules_api::default_context::DefaultContext;
