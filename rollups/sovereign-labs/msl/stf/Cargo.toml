@@ -45,6 +45,7 @@ sov-sequencer = { workspace = true, optional = true }
 
 # Only enable the evm on "experimental" feature
 sov-evm = { workspace = true, default-features = false, optional = true}
+sov-aptosvm = { path = "../modules/sov-aptosvm", default-features = false, optional = true }
 
 [dev-dependencies]
 sov-rollup-interface = { workspace = true, features = ["mocks"] }
@@ -53,7 +54,7 @@ rand = "0.8"
 
 [features]
 default = ["native"]
-experimental =["sov-evm/experimental"]
+experimental =["sov-evm/experimental", "sov-aptosvm/experimental"]
 
 
 native = [

@@ -1,6 +1,8 @@
 use sov_election::ElectionConfig;
 #[cfg(feature = "experimental")]
 use sov_evm::{AccountData, EvmConfig};
+#[cfg(feature = "experimental")]
+use sov_aptosvm::{AptosVmConfig};
 pub use sov_modules_api::default_context::DefaultContext;
 use sov_modules_api::default_signature::private_key::DefaultPrivateKey;
 use sov_modules_api::{Context, Hasher, PublicKey, Spec};
@@ -61,6 +63,7 @@ pub fn create_demo_genesis_config<C: Context>(
         .try_into()
         .expect("EVM module initialized with invalid address");
 
+
     GenesisConfig::new(
         bank_config,
         sequencer_registry_config,
@@ -76,6 +79,10 @@ pub fn create_demo_genesis_config<C: Context>(
                 code: vec![],
                 nonce: 0,
             }],
+        },
+        #[cfg(feature = "experimental")] 
+        AptosVmConfig {
+            data: vec![],
         },
     )
 }
