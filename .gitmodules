@@ -13,3 +13,7 @@
 	path = rollups/sovereign-labs/x25519-dalek
 	url = https://github.com/movemntdev/x25519-dalek
 
+[submodule "rollups/sovereign-labs/move-sov-risc0"]
+	path = rollups/sovereign-labs/move-sov-risc0
+	url = https://github.com/movemntdev/move
+	branch = sov-risc0

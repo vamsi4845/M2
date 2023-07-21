@@ -1,0 +1,15 @@
+[package]
+name = "methods"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+risc0-build = { version = "0.16.1" }
+
+[package.metadata.risc0]
+methods = ["guest"]
+
+[dependencies]
+move-vm-runtime = { path = "../../../move-sov-risc0/language/move-vm/runtime" }
+move-transactional-test-runner = { path = "../../../move-sov-risc0/language/testing-infra/transactional-test-runner" }
+move-vm-integration-tests = { path = "../../../move-sov-risc0/language/move-vm/integration-tests" }
