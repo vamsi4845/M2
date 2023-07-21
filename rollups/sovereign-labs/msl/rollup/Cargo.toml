@@ -29,7 +29,7 @@ risc0-adapter = { workspace = true }
 sov-modules-stf-template = { workspace = true }
 sov-rollup-interface = { workspace = true }
 
-stf = { path = "../stf", features = ["native"] }
+stf = { path = "../stf", features = ["native", "experimental"] }
 sov-db = { workspace = true }
 sov-ethereum = { workspace = true, optional = true }
 sov-sequencer = { workspace = true }

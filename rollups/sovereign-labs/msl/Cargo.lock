@@ -9636,6 +9636,7 @@ dependencies = [
  "serde_json",
  "sha2 0.10.7",
  "sov-accounts",
+ "sov-aptosvm",
  "sov-bank",
  "sov-db",
  "sov-election",
