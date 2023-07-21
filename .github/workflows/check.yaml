@@ -19,7 +19,7 @@ jobs:
       run: git submodule update --init --recursive
     - uses: dtolnay/rust-toolchain@nightly
       with:
-        toolchain: stable
+        toolchain: nightly
         override: true
         profile: minimal
     - uses: Swatinem/rust-cache@v1
