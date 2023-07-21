@@ -8,6 +8,9 @@ use sov_election::query::{ElectionRpcImpl, ElectionRpcServer};
 #[cfg(feature = "experimental")]
 use sov_evm::query::{EvmRpcImpl, EvmRpcServer};
 #[cfg(feature = "native")]
+#[cfg(feature = "experimental")]
+use sov_aptosvm::query::{AptosVmRpcImpl, AptosVmRpcServer};
+#[cfg(feature = "native")]
 pub use sov_modules_api::default_context::DefaultContext;
 use sov_modules_api::Context;
 #[cfg(feature = "native")]
@@ -84,4 +87,5 @@ pub struct Runtime<C: Context> {
     pub value_setter: sov_value_setter::ValueSetter<C>,
     pub accounts: sov_accounts::Accounts<C>,
     pub evm: sov_evm::Evm<C>,
+    pub aptosvm: sov_aptosvm::AptosVm<C>,
 }
