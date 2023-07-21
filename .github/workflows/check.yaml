@@ -15,11 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Initialize submodules
+      run: git submodule update --init --recursive
     - uses: dtolnay/rust-toolchain@nightly
       with:
-        toolchain: stable
+        toolchain: nightly
         override: true
         profile: minimal
     - uses: Swatinem/rust-cache@v1
     - name: cargo check
-      run: cd rollups/sovereign-labs/msl && RUSTFLAGS="--cfg tokio_unstable" cargo check
+      run: cd rollups/sovereign-labs/msl && RUSTFLAGS="--cfg tokio_unstable" cargo check --features experimental
+
