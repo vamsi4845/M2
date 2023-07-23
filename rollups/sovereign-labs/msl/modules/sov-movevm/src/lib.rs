@@ -13,6 +13,11 @@ mod tests;
 #[cfg(feature = "experimental")]
 pub use experimental::{AccountData, Evm, EvmConfig};
 
+// mvmt-patch; jack
+#[cfg(feature = "experimental")]
+pub mod db_interface;
+// mvmt-patch; end
+
 #[cfg(feature = "experimental")]
 mod experimental {
     use revm::primitives::{KECCAK_EMPTY, U256};

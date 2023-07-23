@@ -40,6 +40,14 @@ ethers-signers = { version = "2.0.7", default-features = false }
 anvil-core  = { workspace = true }
 ethers = { workspace = true }
 
+# NOTE: mvmt-patch; jack
+# move-core-types = { path = "../../../move/language/move-core/types" }
+move-core-types = { path = "../../../aptos-core/third_party/move/move-core/types" }
+move-binary-format = { path = "../../../aptos-core/third_party/move/move-binary-format" }
+aptos-types = { path = "../../../aptos-core/types" }
+
+# NOTE: end
+
 [dev-dependencies]
 anvil  = { workspace = true }
 primitive-types = "0.10.1"
