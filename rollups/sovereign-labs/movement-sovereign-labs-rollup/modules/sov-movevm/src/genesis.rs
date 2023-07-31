@@ -1,10 +1,6 @@
 use anyhow::Result;
 use sov_state::WorkingSet;
 
-use crate::evm::db_init::InitEvmDb;
-use crate::evm::AccountInfo;
-use crate::Evm;
-
 impl<C: sov_modules_api::Context> Evm<C> {
     pub(crate) fn init_module(
         &self,

@@ -1,37 +1,20 @@
-#[cfg(feature = "experimental")]
 pub mod call;
-#[cfg(feature = "experimental")]
-pub mod evm;
-#[cfg(feature = "experimental")]
 pub mod genesis;
-#[cfg(feature = "native")]
-#[cfg(feature = "experimental")]
 pub mod query;
-#[cfg(feature = "experimental")]
+pub mod move_resolver;
 #[cfg(test)]
 mod tests;
-#[cfg(feature = "experimental")]
-pub use experimental::{AccountData, Evm, EvmConfig};
+pub use movevm::{AccountData, MoveVm, MoveVmConfig};
 
-#[cfg(feature = "experimental")]
-mod experimental {
+mod movevm {
     use revm::primitives::{KECCAK_EMPTY, U256};
     use sov_modules_api::Error;
     use sov_modules_macros::ModuleInfo;
     use sov_state::WorkingSet;
 
-    use super::evm::db::EvmDb;
-    use super::evm::transaction::BlockEnv;
-    use super::evm::{DbAccount, EthAddress};
-    use crate::evm::{Bytes32, EvmTransaction};
-
     #[derive(Clone)]
     pub struct AccountData {
-        pub address: EthAddress,
-        pub balance: Bytes32,
-        pub code_hash: Bytes32,
-        pub code: Vec<u8>,
-        pub nonce: u64,
+   
     }
 
     impl AccountData {
@@ -39,33 +22,25 @@ mod experimental {
             KECCAK_EMPTY.to_fixed_bytes()
         }
 
-        pub fn balance(balance: u64) -> Bytes32 {
-            U256::from(balance).to_le_bytes()
+        pub fn balance(balance: u64) -> u64 {
+            balance
         }
     }
 
     #[derive(Clone)]
-    pub struct EvmConfig {
+    pub struct MoveVmConfig {
         pub data: Vec<AccountData>,
     }
 
     #[allow(dead_code)]
     #[derive(ModuleInfo, Clone)]
-    pub struct Evm<C: sov_modules_api::Context> {
+    pub struct MoveVm<C: sov_modules_api::Context> {
         #[address]
         pub(crate) address: C::Address,
 
-        #[state]
-        pub(crate) accounts: sov_state::StateMap<EthAddress, DbAccount>,
-
-        #[state]
-        pub(crate) block_env: sov_state::StateValue<BlockEnv>,
-
-        #[state]
-        pub(crate) transactions: sov_state::StateMap<Bytes32, EvmTransaction>,
     }
 
-    impl<C: sov_modules_api::Context> sov_modules_api::Module for Evm<C> {
+    impl<C: sov_modules_api::Context> sov_modules_api::Module for MoveVm<C> {
         type Context = C;
 
         type Config = EvmConfig;
@@ -98,4 +73,5 @@ mod experimental {
             EvmDb::new(self.accounts.clone(), working_set)
         }
     }
+
 }

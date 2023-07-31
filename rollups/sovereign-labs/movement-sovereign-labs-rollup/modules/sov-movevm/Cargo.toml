@@ -40,6 +40,11 @@ ethers-signers = { version = "2.0.7", default-features = false }
 anvil-core  = { workspace = true }
 ethers = { workspace = true }
 
+move-core-types = { workspace = true, version = "0.0.4" }
+move-binary-format = { workspace = true }
+aptos-types = { workspace = true }
+
+
 [dev-dependencies]
 anvil  = { workspace = true }
 primitive-types = "0.10.1"
