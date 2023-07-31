@@ -17,3 +17,6 @@
 	path = rollups/sovereign-labs/move-sov-risc0
 	url = https://github.com/movemntdev/move
 	branch = sov-risc0
+[submodule "rsc/testing_resources/movement-hack"]
+	path = rsc/testing_resources/movement-hack
+	url = https://github.com/movemntdev/movement-hack
