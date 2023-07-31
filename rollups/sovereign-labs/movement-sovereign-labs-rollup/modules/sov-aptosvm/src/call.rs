@@ -47,18 +47,16 @@ use borsh::{BorshDeserialize, BorshSerialize};
 )]
 #[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
 pub struct CallMessage {
-    pub serialized_tx: Vec<u8>,
+    pub serialized_txs: Vec<Vec<u8>>,
 }
 
 impl<C: sov_modules_api::Context> AptosVm<C> {
     pub(crate) fn execute_call(
         &self,
-        serialized_tx: Vec<u8>,
+        serialized_txs: Vec<Vec<u8>>,
         _context: &C,
         working_set: &mut WorkingSet<C::Storage>,
     ) -> Result<CallResponse> {
-
-        println!("EXECUTING BLOCK");
 
         // timestamp
         let unix_now = Utc::now().timestamp() as u64;
@@ -70,7 +68,7 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
         let validator_signer = self.get_validator_signer(working_set)?;
 
         // get the parent (genesis block)
-        // let parent_block_id = self.get_genesis_hash(working_set)?;
+        let parent_block_id = self.get_genesis_hash(working_set)?;
 
         // produce the block meta
         let latest_ledger_info = db.reader.get_latest_ledger_info()?;
@@ -86,28 +84,34 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
             unix_now,
         ));
 
-        // store the transaction
-        let tx = serde_json::from_slice::<Transaction>(&serialized_tx)
-        .expect("Failed to deserialize transaction");
-        let hash = tx.hash(); // diem crypto hasher
-        let str_hash = hash.to_string();
-        self.transactions.set(&str_hash, &serialized_tx, working_set);
+        let mut txs = vec![];
+        for serialized_tx in serialized_txs {
+            let tx = serde_json::from_slice::<Transaction>(&serialized_tx)
+            .expect("Failed to deserialize transaction");
+            txs.push(tx.clone());
+            let hash = tx.hash(); // diem crypto hasher
+            let str_hash = hash.to_string();
+            self.transactions.set(&str_hash, &serialized_tx, working_set);
+        }
 
         // store the checkpoint
         let checkpoint = Transaction::StateCheckpoint(HashValue::random());
 
         // form the complete block
-        let block = vec![
-            block_meta,
-            tx,
-            checkpoint,
+        let mut block = vec![
+
         ];
+        block.push(block_meta);
+        block.extend(txs);
+        block.push(checkpoint);
 
         drop(db); // drop the db from above so that the executor can use RocksDB
 
         // execute the transaction in Aptos
         let executor = self.get_executor(working_set)?;
-        let parent_block_id = executor.committed_block_id();
+        // let parent_block_id = executor.committed_block_id();
+
+        println!("EXECUTING BLOCK {:?} {:?}", block_id, parent_block_id);
         let result = executor
             .execute_block((block_id, block).into(), parent_block_id, None)?;
 

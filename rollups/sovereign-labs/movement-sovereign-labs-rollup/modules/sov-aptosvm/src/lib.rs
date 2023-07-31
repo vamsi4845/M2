@@ -102,7 +102,7 @@ mod aptos_experimental {
             working_set: &mut WorkingSet<C::Storage>,
         ) -> Result<sov_modules_api::CallResponse, Error> {
 
-            Ok(self.execute_call(msg.serialized_tx, context, working_set)?)
+            Ok(self.execute_call(msg.serialized_txs, context, working_set)?)
 
         }
     }

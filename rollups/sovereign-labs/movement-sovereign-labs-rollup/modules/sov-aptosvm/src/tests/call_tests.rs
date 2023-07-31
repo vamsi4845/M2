@@ -44,7 +44,7 @@ type C = DefaultContext;
 const B : u64 = 1_000_000_000;
 
 #[test]
-fn serialize_deserialize_test() {
+fn serialize_deserialize_test()-> Result<(), Error> {
 
     // Helps make sure we haven't introduced any quirks with different version numbers.
     // seed 
@@ -74,10 +74,10 @@ fn serialize_deserialize_test() {
     let deserialized_tx = serde_json::from_slice::<Transaction>(&serialized_tx).unwrap();
 
     let call_message = CallMessage {
-        serialized_tx
+        serialized_txs : vec![serialized_tx]
     };
     let deserialized_tx_too = serde_json::from_slice::<Transaction>(
-        &call_message.serialized_tx
+        &call_message.serialized_txs.get(0).expect("Empty serialized_txs")
     ).unwrap();
 
     let block1_id = gen_block_id(1);
@@ -95,11 +95,13 @@ fn serialize_deserialize_test() {
     let deserialized_block1_tx = serde_json::from_slice::<Transaction>(&serialized_block_1tx).unwrap();
 
     let call_message_block1 = CallMessage {
-        serialized_tx : serialized_block_1tx
+        serialized_txs : vec![serialized_block_1tx]
     };
     let deserialized_block1_tx_too = serde_json::from_slice::<Transaction>(
-        &call_message_block1.serialized_tx
+        &call_message_block1.serialized_txs.get(0).expect("Empty serialized_txs")
     ).unwrap();
+
+    Ok(())
 
 }
 
@@ -147,7 +149,7 @@ fn aptosvm_small_test() -> Result<(), Error>{
 
     let serialized_tx = serde_json::to_vec::<Transaction>(&create1_tx).unwrap();
     aptosvm.call(CallMessage {
-        serialized_tx
+        serialized_txs : vec![serialized_tx]
     }, &sender_context, working_set).unwrap();
 
     Ok(())
@@ -248,18 +250,43 @@ fn aptosvm_test() -> Result<(), Error>{
         Transaction::UserTransaction(create2_tx),
         Transaction::UserTransaction(coins1_tx),
         Transaction::UserTransaction(coins2_tx),
-        Transaction::UserTransaction(transfer_1_2_tx),
+        Transaction::UserTransaction(transfer_1_2_tx.clone()),
         // Transaction::UserTransaction(create_module_tx),
     ];
+
+    let mut serialized_txs = vec![];
 
     // for transaction in the above
     for tx in block_vec {
         let serialized_tx = serde_json::to_vec::<Transaction>(&tx).unwrap();
         // call the transaction
-        aptosvm.call(CallMessage {
-            serialized_tx
-        }, &sender_context, working_set).unwrap();
+        serialized_txs.push(serialized_tx);
     }
+
+    aptosvm.call(CallMessage {
+        serialized_txs
+    }, &sender_context, working_set).unwrap();
+
+    let block_vec_two : Vec<Transaction> = vec![
+        Transaction::UserTransaction(transfer_1_2_tx.clone()),
+        Transaction::UserTransaction(transfer_1_2_tx.clone()),
+        Transaction::UserTransaction(transfer_1_2_tx.clone()),
+        // Transaction::UserTransaction(create_module_tx),
+    ];
+
+    let mut serialized_txs_two = vec![];
+
+    // for transaction in the above
+    for tx in block_vec_two {
+        let serialized_tx = serde_json::to_vec::<Transaction>(&tx).unwrap();
+        // call the transaction
+        serialized_txs_two.push(serialized_tx);
+    }
+
+    aptosvm.call(CallMessage {
+        serialized_txs : serialized_txs_two
+    }, &sender_context, working_set).unwrap();
+
 
     // check caller address
 

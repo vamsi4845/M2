@@ -24,7 +24,7 @@ use serde_json;
 use aptos_types::transaction::{Transaction, WriteSetPayload};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
-pub (crate) const MOVE_DB_DIR: &str = ".move-chain-data";
+pub (crate) const MOVE_DB_DIR: &str = ".sov-aptosvm-db";
 
 impl<C: sov_modules_api::Context> AptosVm<C> {
 
@@ -73,7 +73,14 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
         // set the genesis block
         let executor = self.get_executor(working_set)?;
         let genesis_block_id = executor.committed_block_id();
+        println!("Genesis block id: {:?}", genesis_block_id);
         self.genesis_hash.set(&genesis_block_id.to_vec(), working_set);
+        
+        // might we need to commit the blocks first?
+        /*executor.commit_blocks(
+            vec![genesis_block_id],
+            executor.
+        )?;*/
 
 
         Ok(())
