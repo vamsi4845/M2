@@ -53,6 +53,9 @@ prometheus = "0.11.0"
 prettytable-rs = "^0.10"
 criterion = "0.5.1"
 
+# aptos testing (create_publish_module)
+e2e-move-tests = { workspace = true}
+
 [[bench]]
 name = "rollup_bench"
 harness = false

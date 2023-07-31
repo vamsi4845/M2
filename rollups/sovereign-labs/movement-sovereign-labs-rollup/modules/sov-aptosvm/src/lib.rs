@@ -1,24 +1,17 @@
-#[cfg(feature = "experimental")]
 pub mod call;
-#[cfg(feature = "experimental")]
-pub mod evm;
-#[cfg(feature = "experimental")]
 pub mod genesis;
 #[cfg(feature = "native")]
-#[cfg(feature = "experimental")]
 pub mod query;
-#[cfg(feature = "experimental")]
 #[cfg(test)]
 mod tests;
 
-#[cfg(feature = "experimental")]
-pub use aptos_experimental::{AptosVm, AptosVmConfig};
+pub use aptos::{AptosVm, AptosVmConfig};
 
-#[cfg(feature = "experimental")]
 extern crate dirs;
 
-#[cfg(feature = "experimental")]
-mod aptos_experimental {
+mod aptos {
+
+    use std::str::FromStr;
 
     use anyhow::anyhow;
 
@@ -27,6 +20,7 @@ mod aptos_experimental {
     use sov_state::WorkingSet;
 
     use aptos_types::transaction::{Transaction};
+    use aptos_types::waypoint::{Waypoint};
     use aptos_db::AptosDB;
     use aptos_storage_interface::DbReaderWriter;
     use aptos_types::validator_signer::ValidatorSigner;
@@ -35,6 +29,7 @@ mod aptos_experimental {
     use aptos_executor::db_bootstrapper::{generate_waypoint, maybe_bootstrap};
     use aptos_executor_types::BlockExecutorTrait;
     use aptos_vm::AptosVM;
+    use aptos_crypto::{HashValue};
     // use anyhow::{Error};
 
     use borsh::{BorshDeserialize, BorshSerialize};
@@ -62,6 +57,16 @@ mod aptos_experimental {
         // This is string because we are using transaction.hash: https://github.com/movemntdev/aptos-core/blob/112ad6d8e229a19cfe471153b2fd48f1f22b9684/crates/indexer/src/models/transactions.rs#L31
         #[state]
         pub(crate) transactions: sov_state::StateMap<String, Vec<u8>>, // TODO: fix Transaction serialiation incompatability
+
+        #[state]
+        pub(crate) genesis_hash: sov_state::StateValue<Vec<u8>>, // TODO: fix genesis serialiation incompatability
+
+        #[state]
+        pub(crate) waypoint: sov_state::StateValue<String>, // TODO: fix waypoint serialiation incompatability
+
+        #[state]
+        pub(crate) known_version : sov_state::StateValue<u64>,
+
     }
 
     impl<C: sov_modules_api::Context> sov_modules_api::Module for AptosVm<C> {
@@ -88,7 +93,7 @@ mod aptos_experimental {
             working_set: &mut WorkingSet<C::Storage>,
         ) -> Result<sov_modules_api::CallResponse, Error> {
 
-            Ok(self.execute_call(msg.serialized_tx, context, working_set)?)
+            Ok(self.execute_call(msg.serialized_txs, context, working_set)?)
 
         }
     }
@@ -96,6 +101,81 @@ mod aptos_experimental {
  
 
     impl<C: sov_modules_api::Context> AptosVm<C> {
+
+        pub (crate) fn get_validator_signer(
+            &self,
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            ValidatorSigner, 
+            Error
+        > {
+            
+            let serialized_validator_signer = self.validator_signer.get(working_set).ok_or(
+                anyhow::Error::msg("Validator signer is not set.")
+            )?;
+
+            // TODO: seems redundant, but error types are different
+            Ok(serde_json::from_slice::<ValidatorSigner>(&serialized_validator_signer).expect(
+                "Failed to deserialize validator signer"
+            ))
+
+        }
+
+        pub (crate) fn get_genesis_hash(
+            &self,
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            HashValue, 
+            Error
+        > {
+            
+            let serialized_genesis_hash = self.genesis_hash.get(working_set).ok_or(
+                anyhow::Error::msg("Serialized genesis hash is not set.")
+            )?;
+
+            // TODO: seems redundant, but error types are different
+            Ok(HashValue::from_slice(serialized_genesis_hash).expect(
+                "Failed to deserialize genesis hash"
+            ))
+
+        }
+
+        pub (crate) fn get_waypoint(
+            &self,
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            Waypoint, 
+            Error
+        > {
+            
+            let serialized_waypoint = self.waypoint.get(working_set).ok_or(
+                anyhow::Error::msg("Serialized waypoint hash is not set.")
+            )?;
+
+            println!("serialized_waypoint: {:?}", serialized_waypoint);
+
+            // TODO: seems redundant, but error types are different
+            Ok(Waypoint::from_str(serialized_waypoint.as_str()).expect(
+                "Failed to deserialize waypoint"
+            ))
+
+        }
+
+        pub (crate) fn get_known_version(
+            &self,
+            working_set: &mut WorkingSet<C::Storage>,
+        ) -> Result<
+            u64, 
+            Error
+        > {
+            
+            let known_version = self.known_version.get(working_set).ok_or(
+                anyhow::Error::msg("Serialized waypoint hash is not set.")
+            )?;
+
+            Ok(known_version)
+
+        }
 
         pub(crate) fn get_db(
             &self,
@@ -108,8 +188,7 @@ mod aptos_experimental {
             let path = self.db_path.get(working_set).ok_or(
                 anyhow::Error::msg("Database path is not set.")
             )?;
-            // TODO: swap for non-test db
-            // TODO: swap for celestia DA
+ 
             Ok(DbReaderWriter::new(AptosDB::new_for_sov(path.as_str())))
 
         }

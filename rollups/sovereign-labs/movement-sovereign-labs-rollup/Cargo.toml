@@ -35,6 +35,9 @@ aptos-vm = { path = "../aptos-core/aptos-move/aptos-vm" }
 aptos-vm-genesis = { path = "../aptos-core/aptos-move/vm-genesis" }
 aptos-state-view = { path = "../aptos-core/storage/state-view" }
 aptos-storage-interface = { path = "../aptos-core/storage/storage-interface" }
+aptos-framework = { path = "../aptos-core/aptos-move/framework" }
+aptos-executor-test-helpers = { path = "../aptos-core/execution/executor-test-helpers" }
+aptos-consensus-types = { path = "../aptos-core/consensus/consensus-types"}
 
 
 # sovereign-sdk
@@ -74,7 +77,8 @@ once_cell = "1.10.0"
 prometheus = { version = "0.13.3", default-features = false }
 proptest = "1.0.0"
 proptest-derive = "0.3.0"
-rand = "0.8"
+rand = "0.7.3"
+rand_core = "0.5.1"
 rayon = "1.5.2"
 rocksdb = { version = "0.21.0", features = ["lz4"] }
 serde = { version = "1.0.137", features = ["derive", "rc"] }
@@ -95,3 +99,6 @@ tokio = { version = "1", features = ["full"] }
 ethers = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
 anvil  = { git = "https://github.com/foundry-rs/foundry", version = "0.1.0" }
 anvil-core = { git = "https://github.com/foundry-rs/foundry", features = ["fastrlp", "serde"], version = "0.1.0" }
+
+# aptos testing (create_publish_module)
+e2e-move-tests = { path = "../aptos-core/aptos-move/e2e-move-tests" }

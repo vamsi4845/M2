@@ -1,4 +1,5 @@
 use anyhow::Result;
+use aptos_types::waypoint::Waypoint;
 use sov_state::WorkingSet;
 use crate::{AptosVm};
 
@@ -23,7 +24,7 @@ use serde_json;
 use aptos_types::transaction::{Transaction, WriteSetPayload};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
-const MOVE_DB_DIR: &str = ".move-chain-data";
+pub (crate) const MOVE_DB_DIR: &str = ".sov-aptosvm-db";
 
 impl<C: sov_modules_api::Context> AptosVm<C> {
 
@@ -40,7 +41,7 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
             validators[0].data.owner_address,
             validators[0].consensus_key.clone(),
         );
-        self.validator_signer.set(&serde_json::to_vec(&signer.author)?, working_set);
+        self.validator_signer.set(&serde_json::to_vec(&signer)?, working_set);
 
         // issue the gnesis transaction
         let genesis_txn = Transaction::GenesisTransaction(WriteSetPayload::Direct(genesis));
@@ -59,13 +60,28 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
         let db = self.get_db(working_set)?;
 
         // 3. write the genesis transaction
-        let waypoint = generate_waypoint::<AptosVM>(&db, &genesis_txn);
-        match waypoint {
-            Ok(w) => {
-                maybe_bootstrap::<AptosVM>(&db, &genesis_txn, w).unwrap();
-            }
-            _ => {}
-        }
+        let waypoint = generate_waypoint::<AptosVM>(&db, &genesis_txn)?;
+        maybe_bootstrap::<AptosVM>(&db, &genesis_txn, waypoint)?;
+
+        // set the genesis waypoint
+        self.waypoint.set(&waypoint.to_string(), working_set);
+
+        // set state version
+        self.known_version.set(&0, working_set);
+
+        drop(db); // need to drop the lock on the RocksDB
+        // set the genesis block
+        let executor = self.get_executor(working_set)?;
+        let genesis_block_id = executor.committed_block_id();
+        println!("Genesis block id: {:?}", genesis_block_id);
+        self.genesis_hash.set(&genesis_block_id.to_vec(), working_set);
+        
+        // might we need to commit the blocks first?
+        /*executor.commit_blocks(
+            vec![genesis_block_id],
+            executor.
+        )?;*/
+
 
         Ok(())
 
