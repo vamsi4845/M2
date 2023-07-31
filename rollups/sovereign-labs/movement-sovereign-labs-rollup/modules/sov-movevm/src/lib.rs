@@ -6,7 +6,17 @@ pub mod move_resolver;
 mod tests;
 pub use movevm::{AccountData, MoveVm, MoveVmConfig};
 
+<<<<<<< HEAD:rollups/sovereign-labs/movement-sovereign-labs-rollup/modules/sov-movevm/src/lib.rs
 mod movevm {
+=======
+// mvmt-patch; jack
+#[cfg(feature = "experimental")]
+pub mod db_interface;
+// mvmt-patch; end
+
+#[cfg(feature = "experimental")]
+mod experimental {
+>>>>>>> jack/add-db-interface:rollups/sovereign-labs/msl/modules/sov-movevm/src/lib.rs
     use revm::primitives::{KECCAK_EMPTY, U256};
     use sov_modules_api::Error;
     use sov_modules_macros::ModuleInfo;
