@@ -1,24 +1,15 @@
-#[cfg(feature = "experimental")]
 pub mod call;
-// #[cfg(feature = "experimental")]
-// pub mod evm;
-#[cfg(feature = "experimental")]
 pub mod genesis;
 #[cfg(feature = "native")]
-#[cfg(feature = "experimental")]
 pub mod query;
-#[cfg(feature = "experimental")]
 #[cfg(test)]
 mod tests;
 
-#[cfg(feature = "experimental")]
-pub use aptos_experimental::{AptosVm, AptosVmConfig};
+pub use aptos::{AptosVm, AptosVmConfig};
 
-#[cfg(feature = "experimental")]
 extern crate dirs;
 
-#[cfg(feature = "experimental")]
-mod aptos_experimental {
+mod aptos {
 
     use std::str::FromStr;
 
