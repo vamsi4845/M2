@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "modules/sov-movevm",
+    "modules/sov-movevm/sov-movevm-types",
     "modules/sov-aptosvm",
     "rollup",
     "stf",
@@ -102,3 +103,11 @@ anvil-core = { git = "https://github.com/foundry-rs/foundry", features = ["fastr
 
 # aptos testing (create_publish_module)
 e2e-move-tests = { path = "../aptos-core/aptos-move/e2e-move-tests" }
+
+# move
+# TODO: change to move submodule for better versioning
+move-core-types = { path = "../aptos-core/third_party/move/move-core/types", version = "0.0.4" }
+move-vm-types = { path = "../aptos-core/third_party/move/move-vm/types" }
+move-binary-format = { path = "../aptos-core/third_party/move/move-binary-format" }
+move-vm-runtime = { path = "../aptos-core/third_party/move/move-vm/runtime" }
+move-stdlib = { path = "../aptos-core/third_party/move/move-stdlib" }

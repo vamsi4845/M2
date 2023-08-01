@@ -16,8 +16,6 @@ use jupiter::types::NamespaceId;
 use jupiter::verifier::{CelestiaVerifier, ChainValidityCondition, RollupParams};
 use risc0_adapter::host::Risc0Verifier;
 use sov_db::ledger_db::{LedgerDB, SlotCommit};
-#[cfg(feature = "experimental")]
-use sov_ethereum::get_ethereum_rpc;
 use sov_modules_api::RpcRunner;
 use sov_rollup_interface::crypto::NoOpHasher;
 use sov_rollup_interface::da::{BlockHeaderTrait, DaVerifier};
