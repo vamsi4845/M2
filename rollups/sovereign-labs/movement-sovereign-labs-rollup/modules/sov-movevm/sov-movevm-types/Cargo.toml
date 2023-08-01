@@ -1,6 +1,6 @@
 [package]
-name = "sov-movevm"
-description = "A Sovereign SDK module for move vm"
+name = "sov-movevm-types"
+description = "Types for a Sovereign SDK module for movevm"
 authors = { workspace = true }
 edition = { workspace = true }
 homepage = { workspace = true }
@@ -43,11 +43,6 @@ ethers = { workspace = true }
 move-core-types = { workspace = true, version = "0.0.4" }
 move-binary-format = { workspace = true }
 aptos-types = { workspace = true }
-move-vm-runtime = { workspace = true }
-move-stdlib = { workspace = true}
-move-vm-types = { workspace = true }
-
-sov-movevm-types = { path = "./sov-movevm-types" }
 
 [dev-dependencies]
 anvil  = { workspace = true }

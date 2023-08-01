@@ -7,7 +7,7 @@ use sov_state::WorkingSet;
 use move_core_types::{
   account_address::AccountAddress,
   language_storage::{ModuleId, StructTag},
-  resolver::{ModuleResolver, ResourceResolver},
+  resolver::{ModuleResolver, ResourceResolver, MoveResolver},
   metadata::{Metadata}
 };
 use move_binary_format::{ file_format::CompiledModule };
@@ -20,6 +20,7 @@ use borsh::{BorshSerialize, BorshDeserialize};
 /// AccessPath doesn't derive BorshSerialize and BorshDeserialize. 
 /// It drives serde::Serialize and serde::Deserialize
 /// StateMap requires that its Key should derive borsh
+#[derive(Debug, PartialEq, Clone)]
 pub struct AccessPathWrapper(AccessPath);
 
 impl BorshSerialize for AccessPathWrapper {
@@ -92,3 +93,7 @@ impl<'a, C: sov_modules_api::Context> ModuleResolver for MvmStoreView<'a, C> {
     Ok(self.remote_cache.get(&AccessPathWrapper(ap), &mut working_set))
   }
 }
+
+/*impl<'a, C: sov_modules_api::Context> MoveResolver for MvmStoreView<'a, C> {
+
+}*/
