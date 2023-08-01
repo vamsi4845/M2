@@ -1,7 +1,7 @@
 <div align="center">
     <img src="./rsc/movement_logo.png" alt="Project Logo" width="200" height="200">
 
-# M1
+# M2
 
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://opensource.org/license/bsd-3-clause/)
 [![Tests](https://img.shields.io/badge/tests-Passing-brightgreen)](#)
