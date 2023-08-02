@@ -1,6 +1,6 @@
 [package]
-name = "sov-movevm"
-description = "A Sovereign SDK module for move vm"
+name = "working-set-move-resolver"
+description = "A Move resolver implemeted for the sovereign labs working set"
 authors = { workspace = true }
 edition = { workspace = true }
 homepage = { workspace = true }
@@ -48,8 +48,6 @@ move-stdlib = { workspace = true}
 move-vm-types = { workspace = true }
 
 sov-movevm-types = { workspace = true }
-working-set-move-resolver = { workspace = true }
-working-set-change-set-publisher = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }

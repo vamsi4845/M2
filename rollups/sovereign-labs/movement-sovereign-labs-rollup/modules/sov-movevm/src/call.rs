@@ -10,8 +10,7 @@ use move_vm_types::gas::{UnmeteredGasMeter};
 use std::borrow::Borrow;
 use std::rc::Rc;
 use std::borrow::Cow;
-
-
+use working_set_change_set_publisher::{ChangeSetPublisher};
 
 
 #[cfg_attr(
@@ -43,6 +42,9 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
             &mut UnmeteredGasMeter{ },
         ).expect("Failed to execute script");
 
+        let (change_set, events) = session.finish()?;
+        self.get_change_set_publisher(working_set).publish(change_set)?;
+
         Ok(CallResponse { })
         
 
@@ -68,6 +70,9 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
             &mut UnmeteredGasMeter{},
         ).expect("Failed to execute entry function");
 
+        let (change_set, events) = session.finish()?;
+        self.get_change_set_publisher(working_set).publish(change_set)?;
+
         Ok(CallResponse { })
 
     }
@@ -87,6 +92,9 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
             publish_modules.account_address.into(),
             &mut UnmeteredGasMeter { },
         ).expect("Failed to publish module bundle");
+
+        let (change_set, events) = session.finish()?;
+        self.get_change_set_publisher(working_set).publish(change_set)?;
 
         Ok(CallResponse { })
 
