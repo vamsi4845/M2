@@ -38,8 +38,10 @@ This repository contains the code and contributor documentation for M2. If you w
 ## Features
 
 Currently, M2 consists of...
-- `sov-aptosvm`: a sovereign rollup of Aptos VM.
-- `sov-movevm`: a sovereign rollup of Move VM.
+- `sov-aptosvm`: a Sovereign Labs rollup of Aptos VM.
+- `sov-movevm`: a Sovereign Labs rollup of Move VM.
+- `sov-monovm`: a Sovereign Labs rollup combining both `sov-aptosvm` and `sov-movevm` namespaces.
+  - Currently, the `sov-monovm` testnet is served at `testnet.sov-monovm.mvlabs.net`. It is under heavy development.
 
 ## Installation
 

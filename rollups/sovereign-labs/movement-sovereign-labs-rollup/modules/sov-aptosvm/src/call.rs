@@ -51,7 +51,9 @@ pub struct CallMessage {
 }
 
 impl<C: sov_modules_api::Context> AptosVm<C> {
-    pub(crate) fn execute_call(
+
+    #[cfg(feature = "aptos-consensus")]
+    pub(crate) fn execute_call_with_aptos_consensus(
         &self,
         serialized_txs: Vec<Vec<u8>>,
         _context: &C,
@@ -162,5 +164,37 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
         // TODO: see https://github.com/movemntdev/aptos-core/blob/main/aptos-move/block-executor/src/executor.rs#L73
         // TODO: for an entrypoint that does not require a block.
         Ok(CallResponse::default())
+
+    }
+
+    pub(crate) fn execute_call_with_naked_vm(
+        &self,
+        serialized_txs: Vec<Vec<u8>>,
+        _context: &C,
+        working_set: &mut WorkingSet<C::Storage>,
+    ) -> Result<CallResponse> {
+
+        let vm = self.get_aptos_vm(working_set)?;
+        Ok(CallResponse::default())
+
+    }
+
+    pub(crate) fn execute_call(
+        &self,
+        serialized_txs: Vec<Vec<u8>>,
+        _context: &C,
+        working_set: &mut WorkingSet<C::Storage>,
+    ) -> Result<CallResponse> {
+
+       #[cfg(feature = "aptos-consensus")]
+       {
+            self.execute_call_with_aptos_consensus(serialized_txs, _context, working_set)
+       }
+
+       #[cfg(not(feature = "aptos-consensus"))]
+       {
+            self.execute_call_with_naked_vm(serialized_txs, _context, working_set)
+       }
+
     }
 }

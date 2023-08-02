@@ -3,6 +3,7 @@ use borsh::{BorshDeserialize, BorshSerialize};
 use move_core_types::language_storage::{ModuleId, TypeTag};
 use move_core_types::identifier::IdentStr;
 use aptos_types::account_address::AccountAddress;
+use aptos_types::{ access_path::AccessPath };
 
 #[cfg_attr(
     feature = "native",
@@ -105,55 +106,29 @@ impl BorshDeserialize for AccountAddressWrapper {
     fn deserialize_reader<R>(_: &mut R) -> Result<Self, std::io::Error> where R: std::io::Read { todo!() }
 }
 
-#[cfg_attr(
-    feature = "native",
-    derive(serde::Serialize),
-    derive(serde::Deserialize)
-)]
-#[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
-pub struct CallScript {
-    pub script : Vec<u8>,
-    pub ty_args: Vec<TypeTagWrapper>,
-    pub args: Vec<Vec<u8>>,
+/// Wrapper for AccessPath
+/// AccessPath doesn't derive BorshSerialize and BorshDeserialize. 
+/// It drives serde::Serialize and serde::Deserialize
+/// StateMap requires that its Key should derive borsh
+#[derive(Debug, PartialEq, Clone)]
+pub struct AccessPathWrapper(AccessPath);
+
+impl BorshSerialize for AccessPathWrapper {
+  fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+      writer.write_all(&serde_json::to_vec(&self.0)?)?;        
+      Ok(())
+  }
 }
 
-
-#[cfg_attr(
-    feature = "native",
-    derive(serde::Serialize),
-    derive(serde::Deserialize)
-)]
-#[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
-pub struct CallModuleFunc {
-    pub module_id: ModuleIdWrapper,
-    pub function_name: IdentStrWrapper,
-    pub ty_args: Vec<TypeTagWrapper>,
-    pub args: Vec<Vec<u8>>,
+impl BorshDeserialize for AccessPathWrapper {
+  fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
+    Ok(Self(serde_json::from_slice(buf)?))
+  }
+  fn deserialize_reader<R>(_: &mut R) -> Result<Self, std::io::Error> where R: std::io::Read { todo!() }
 }
 
-#[cfg_attr(
-    feature = "native",
-    derive(serde::Serialize),
-    derive(serde::Deserialize)
-)]
-#[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
-pub struct PublishModules {
-    pub modules: Vec<Vec<u8>>,
-    pub account_address: AccountAddressWrapper
-}
-
-#[cfg_attr(
-    feature = "native",
-    derive(serde::Serialize),
-    derive(serde::Deserialize)
-)]
-#[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
-pub enum Transaction {
-
-    CallScript(CallScript),
-
-    CallModuleFunc(CallModuleFunc),
-
-    PublishModules(PublishModules)
-
+impl AccessPathWrapper {
+    pub fn new (access_path : AccessPath) -> Self {
+        Self(access_path)
+    }
 }

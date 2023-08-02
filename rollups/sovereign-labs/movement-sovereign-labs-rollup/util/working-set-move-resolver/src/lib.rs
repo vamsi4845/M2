@@ -15,38 +15,17 @@ use aptos_types::{ access_path::AccessPath };
 
 use anyhow::Error;
 use borsh::{BorshSerialize, BorshDeserialize};
-
-/// Wrapper for AccessPath
-/// AccessPath doesn't derive BorshSerialize and BorshDeserialize. 
-/// It drives serde::Serialize and serde::Deserialize
-/// StateMap requires that its Key should derive borsh
-#[derive(Debug, PartialEq, Clone)]
-pub struct AccessPathWrapper(AccessPath);
-
-impl BorshSerialize for AccessPathWrapper {
-  fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
-      writer.write_all(&serde_json::to_vec(&self.0)?)?;        
-      Ok(())
-  }
-}
-
-impl BorshDeserialize for AccessPathWrapper {
-  fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
-    Ok(Self(serde_json::from_slice(buf)?))
-  }
-  fn deserialize_reader<R>(_: &mut R) -> Result<Self, std::io::Error> where R: std::io::Read { todo!() }
-}
-
+use sov_movevm_types::identifiers::AccessPathWrapper;
 
 /// This is an implmenetantion of remote cache which will be back of TransactionDataCache
 /// review? I used RefCell but not sure if it can be secure.
-pub(crate) struct MvmStoreView<'a, C: sov_modules_api::Context> {
-    pub(crate) remote_cache: sov_state::StateMap<AccessPathWrapper, Vec<u8>>,
-    pub(crate) working_set: RefCell<&'a mut WorkingSet<C::Storage>>,
+pub struct MvmStoreView<'a, C: sov_modules_api::Context> {
+    pub remote_cache: sov_state::StateMap<AccessPathWrapper, Vec<u8>>,
+    pub working_set: RefCell<&'a mut WorkingSet<C::Storage>>,
 }
 
 impl<'a, C: sov_modules_api::Context> MvmStoreView<'a, C> {
-  pub(crate) fn new(
+  pub fn new(
       remote_cache: sov_state::StateMap<AccessPathWrapper, Vec<u8>>,
       working_set: &'a mut WorkingSet<C::Storage>,
   ) -> Self {
@@ -67,7 +46,7 @@ impl<'a, C: sov_modules_api::Context> ResourceResolver for MvmStoreView<'a, C> {
     let ap = AccessPath::resource_access_path(*address, struct_tag.clone()).ok();
     if let Some(path) = ap {
       let mut working_set = self.working_set.borrow_mut();
-      Ok((self.remote_cache.get(&AccessPathWrapper(path), &mut working_set), 0))
+      Ok((self.remote_cache.get(&AccessPathWrapper::new(path), &mut working_set), 0))
     } else {
       Ok((None, 0))
     }
@@ -90,7 +69,7 @@ impl<'a, C: sov_modules_api::Context> ModuleResolver for MvmStoreView<'a, C> {
   fn get_module(&self, module_id: &ModuleId) -> Result<Option<Vec<u8>>, Error> {
     let ap = AccessPath::from(module_id);
     let mut working_set = self.working_set.borrow_mut();
-    Ok(self.remote_cache.get(&AccessPathWrapper(ap), &mut working_set))
+    Ok(self.remote_cache.get(&AccessPathWrapper::new(ap), &mut working_set))
   }
 }
 

@@ -8,7 +8,6 @@ use sov_election::query::{ElectionRpcImpl, ElectionRpcServer};
 #[cfg(feature = "experimental")]
 use sov_evm::query::{EvmRpcImpl, EvmRpcServer};
 #[cfg(feature = "native")]
-#[cfg(feature = "experimental")]
 use sov_aptosvm::query::{AptosVmRpcImpl, AptosVmRpcServer};
 #[cfg(feature = "native")]
 pub use sov_modules_api::default_context::DefaultContext;
@@ -20,6 +19,11 @@ use sov_modules_macros::{DefaultRuntime, DispatchCall, Genesis, MessageCodec};
 use sov_sequencer_registry::query::{SequencerRegistryRpcImpl, SequencerRegistryRpcServer};
 #[cfg(feature = "native")]
 use sov_value_setter::query::{ValueSetterRpcImpl, ValueSetterRpcServer};
+#[cfg(feature = "native")]
+use sov_movevm::query::{MoveVmRpcImpl, MoveVmRpcServer};
+#[cfg(feature = "native")]
+use sov_movevm;
+
 
 /// The Rollup entrypoint.
 ///
@@ -56,23 +60,7 @@ use sov_value_setter::query::{ValueSetterRpcImpl, ValueSetterRpcServer};
 /// Similar mechanism works for queries with the difference that queries are submitted by users directly to the rollup node
 /// instead of going through the DA layer.
 
-#[cfg(not(feature = "experimental"))]
-#[cfg_attr(
-    feature = "native",
-    cli_parser(DefaultContext),
-    expose_rpc(DefaultContext)
-)]
-#[derive(Genesis, DispatchCall, MessageCodec, DefaultRuntime)]
-#[serialization(borsh::BorshDeserialize, borsh::BorshSerialize)]
-pub struct Runtime<C: Context> {
-    pub bank: sov_bank::Bank<C>,
-    pub sequencer_registry: sov_sequencer_registry::SequencerRegistry<C>,
-    pub election: sov_election::Election<C>,
-    pub value_setter: sov_value_setter::ValueSetter<C>,
-    pub accounts: sov_accounts::Accounts<C>,
-}
 
-#[cfg(feature = "experimental")]
 #[cfg_attr(
     feature = "native",
     cli_parser(DefaultContext),
@@ -86,6 +74,6 @@ pub struct Runtime<C: Context> {
     pub election: sov_election::Election<C>,
     pub value_setter: sov_value_setter::ValueSetter<C>,
     pub accounts: sov_accounts::Accounts<C>,
-    pub evm: sov_evm::Evm<C>,
     pub aptosvm: sov_aptosvm::AptosVm<C>,
+    pub movevm: sov_movevm::MoveVm<C>,
 }

@@ -2,13 +2,13 @@
 resolver = "2"
 members = [
     "modules/sov-movevm",
-    "modules/sov-movevm/sov-movevm-types",
     "modules/sov-aptosvm",
     "rollup",
     "stf",
     "rollup-config",
-    # "util/move-cache-over-celestia",
-    "util/aptos-db-over-celestia"
+    "util/sov-movevm-types",
+    "util/working-set-move-resolver",
+    "util/working-set-change-set-publisher"
 ]
 
 [workspace.package]
@@ -111,3 +111,8 @@ move-vm-types = { path = "../aptos-core/third_party/move/move-vm/types" }
 move-binary-format = { path = "../aptos-core/third_party/move/move-binary-format" }
 move-vm-runtime = { path = "../aptos-core/third_party/move/move-vm/runtime" }
 move-stdlib = { path = "../aptos-core/third_party/move/move-stdlib" }
+
+# internal
+sov-movevm-types = { path = "./util/sov-movevm-types" }
+working-set-move-resolver = { path = "./util/working-set-move-resolver" }
+working-set-change-set-publisher = { path = "./util/working-set-change-set-publisher" }

@@ -1,6 +1,6 @@
 [package]
-name = "sov-movevm"
-description = "A Sovereign SDK module for move vm"
+name = "working-set-change-set-publisher"
+description = "A Move change set publisher implemented to work with the SOV Working Set"
 authors = { workspace = true }
 edition = { workspace = true }
 homepage = { workspace = true }
@@ -46,10 +46,7 @@ aptos-types = { workspace = true }
 move-vm-runtime = { workspace = true }
 move-stdlib = { workspace = true}
 move-vm-types = { workspace = true }
-
 sov-movevm-types = { workspace = true }
-working-set-move-resolver = { workspace = true }
-working-set-change-set-publisher = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }

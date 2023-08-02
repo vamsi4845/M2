@@ -954,14 +954,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aptos-db-over-celestia"
-version = "0.1.0"
-dependencies = [
- "aptos-storage-interface",
- "jupiter",
-]
-
-[[package]]
 name = "aptos-db-tool"
 version = "0.1.0"
 dependencies = [
@@ -11696,6 +11688,8 @@ dependencies = [
  "thiserror",
  "tokio",
  "tracing",
+ "working-set-change-set-publisher",
+ "working-set-move-resolver",
 ]
 
 [[package]]
@@ -11891,6 +11885,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-modules-stf-template",
+ "sov-movevm",
  "sov-rollup-interface",
  "sov-schema-db",
  "sov-sequencer",
@@ -13711,6 +13706,84 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "80d0f4e272c85def139476380b12f9ac60926689dd2e01d4923222f40580869d"
 dependencies = [
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "working-set-change-set-publisher"
+version = "0.1.0"
+dependencies = [
+ "anvil",
+ "anvil-core",
+ "anyhow",
+ "aptos-types",
+ "borsh",
+ "bytes",
+ "ethereum-types",
+ "ethers",
+ "ethers-contract 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-core 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-middleware 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-providers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-signers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex",
+ "jsonrpsee",
+ "move-binary-format",
+ "move-core-types",
+ "move-stdlib",
+ "move-vm-runtime",
+ "move-vm-types",
+ "primitive-types 0.10.1",
+ "revm",
+ "serde 1.0.180",
+ "serde_json",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-movevm-types",
+ "sov-rollup-interface",
+ "sov-state",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "working-set-move-resolver"
+version = "0.1.0"
+dependencies = [
+ "anvil",
+ "anvil-core",
+ "anyhow",
+ "aptos-types",
+ "borsh",
+ "bytes",
+ "ethereum-types",
+ "ethers",
+ "ethers-contract 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-core 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-middleware 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-providers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-signers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex",
+ "jsonrpsee",
+ "move-binary-format",
+ "move-core-types",
+ "move-stdlib",
+ "move-vm-runtime",
+ "move-vm-types",
+ "primitive-types 0.10.1",
+ "revm",
+ "serde 1.0.180",
+ "serde_json",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-movevm-types",
+ "sov-rollup-interface",
+ "sov-state",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]
