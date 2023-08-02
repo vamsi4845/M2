@@ -11,6 +11,7 @@ use std::borrow::Borrow;
 use std::rc::Rc;
 use std::borrow::Cow;
 use working_set_change_set_publisher::{ChangeSetPublisher};
+use sov_modules_api::Error;
 
 
 #[cfg_attr(
