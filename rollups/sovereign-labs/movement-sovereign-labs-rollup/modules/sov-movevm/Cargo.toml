@@ -46,10 +46,12 @@ aptos-types = { workspace = true }
 move-vm-runtime = { workspace = true }
 move-stdlib = { workspace = true}
 move-vm-types = { workspace = true }
+move-compiler = { workspace = true }
 
 sov-movevm-types = { workspace = true }
 working-set-move-resolver = { workspace = true }
 working-set-change-set-publisher = { workspace = true }
+dirs = "3.0.2"
 
 [dev-dependencies]
 anvil  = { workspace = true }
