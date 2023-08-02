@@ -21,6 +21,9 @@ use sov_sequencer_registry::query::{SequencerRegistryRpcImpl, SequencerRegistryR
 use sov_value_setter::query::{ValueSetterRpcImpl, ValueSetterRpcServer};
 #[cfg(feature = "native")]
 use sov_movevm::query::{MoveVmRpcImpl, MoveVmRpcServer};
+#[cfg(feature = "native")]
+use sov_movevm;
+
 
 /// The Rollup entrypoint.
 ///

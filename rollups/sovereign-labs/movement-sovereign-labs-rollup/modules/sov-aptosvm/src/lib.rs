@@ -47,29 +47,29 @@ mod aptos {
         #[address]
         pub(crate) address: C::Address,
 
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) db_path: sov_state::StateValue<String>,
 
         // TODO: this may be redundant with address
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) validator_signer: sov_state::StateValue<Vec<u8>>, // TODO: fix validator signer incompatability
 
         // This is string because we are using transaction.hash: https://github.com/movemntdev/aptos-core/blob/112ad6d8e229a19cfe471153b2fd48f1f22b9684/crates/indexer/src/models/transactions.rs#L31
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) transactions: sov_state::StateMap<String, Vec<u8>>, // TODO: fix Transaction serialiation incompatability
 
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) genesis_hash: sov_state::StateValue<Vec<u8>>, // TODO: fix genesis serialiation incompatability
 
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) waypoint: sov_state::StateValue<String>, // TODO: fix waypoint serialiation incompatability
 
-        #[cfg(feature = "aptos-consensus")]
+        // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) known_version : sov_state::StateValue<u64>,
 

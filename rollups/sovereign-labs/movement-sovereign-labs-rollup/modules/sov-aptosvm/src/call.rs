@@ -52,6 +52,7 @@ pub struct CallMessage {
 
 impl<C: sov_modules_api::Context> AptosVm<C> {
 
+    #[cfg(feature = "aptos-consensus")]
     pub(crate) fn execute_call_with_aptos_consensus(
         &self,
         serialized_txs: Vec<Vec<u8>>,
@@ -174,6 +175,7 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
     ) -> Result<CallResponse> {
 
         let vm = self.get_aptos_vm(working_set)?;
+        Ok(CallResponse::default())
 
     }
 
@@ -186,12 +188,12 @@ impl<C: sov_modules_api::Context> AptosVm<C> {
 
        #[cfg(feature = "aptos-consensus")]
        {
-            self.execute_call_with_aptos_consensus(serialized_txs, context, working_set)
+            self.execute_call_with_aptos_consensus(serialized_txs, _context, working_set)
        }
 
        #[cfg(not(feature = "aptos-consensus"))]
        {
-            self.execute_call_with_naked_vm(serialized_txs, context, working_set)
+            self.execute_call_with_naked_vm(serialized_txs, _context, working_set)
        }
 
     }

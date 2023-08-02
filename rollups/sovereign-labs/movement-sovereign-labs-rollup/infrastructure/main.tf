@@ -1,13 +1,23 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-2"
 }
 
 data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+resource "aws_subnet" "fargate_subnet" {
+  vpc_id            = data.aws_vpc.default.id
+  cidr_block        = "172.31.48.0/20"
+  availability_zone = "us-east-2a"
+
+  tags = {
+    Name = "fargate_subnet"
+  }
+}
+
+locals {
+  subnet_ids = [aws_subnet.fargate_subnet.id]
 }
 
 resource "aws_ecs_cluster" "cluster" {
@@ -25,31 +35,30 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = <<DEFINITION
   [
     {
-      "name": "container1",
-      "image": "my_docker_image_1",
+      "name": "celestia_bridge_service",
+      "image": "dubbelosix/sov-celestia-local",
       "essential": true,
       "portMappings": [
         {
-          "containerPort": 12345,
-          "hostPort": 12345,
+          "containerPort": 26657,
+          "hostPort": 26657,
+          "protocol": "tcp"
+        }, 
+        {
+          "containerPort": 26659,
+          "hostPort": 26659,
           "protocol": "tcp"
         }
       ]
     },
     {
-      "name": "container2",
-      "image": "my_docker_image_2",
+      "name": "sov_monovm",
+      "image": "public.ecr.aws/c4i6k4r8/sov-monovm",
       "essential": true,
-      "links": ["container1"],
       "portMappings": [
         {
-          "containerPort": 8000,
-          "hostPort": 8000,
-          "protocol": "tcp"
-        },
-        {
-          "containerPort": 443,
-          "hostPort": 443,
+          "containerPort": 12345,
+          "hostPort": 12345,
           "protocol": "tcp"
         }
       ]
@@ -67,13 +76,13 @@ resource "aws_ecs_service" "service" {
 
   network_configuration {
     assign_public_ip = false
-    subnets          = data.aws_subnet_ids.default.ids
+    subnets          = local.subnet_ids
     security_groups  = [aws_security_group.sg.id]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
-    container_name   = "container2"
+    container_name   = "sov_monovm"
     container_port   = 8000
   }
 }
@@ -132,21 +141,29 @@ resource "aws_security_group" "sg" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "my_subdomain.my_domain.com"
+  domain_name       = "testnet.sov-monovm.mvlabs.net"
   validation_method = "DNS"
 }
 
 resource "aws_route53_record" "cert_validation" {
-  name    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_type
-  zone_id = "my_zone_id"
-  records = [aws_acm_certificate.cert.domain_validation_options.0.resource_record_value]
+  for_each = {
+    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  name    = each.value.name
+  type    = each.value.type
+  zone_id = "Z02153823HW9V0MX2AVRG"
+  records = [each.value.record]
   ttl     = 60
 }
 
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [aws_route53_record.cert_validation.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
 resource "aws_lb" "lb" {
@@ -154,7 +171,7 @@ resource "aws_lb" "lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = data.aws_subnet_ids.default.ids
+  subnets            = local.subnet_ids
 }
 
 resource "aws_lb_listener" "listener" {
@@ -170,6 +187,7 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
+
 resource "aws_lb_target_group" "target_group" {
   name     = "fargate-tg"
   port     = 8000
@@ -183,14 +201,12 @@ resource "aws_lb_target_group" "target_group" {
     timeout             = 3
     healthy_threshold   = 3
     unhealthy_threshold = 3
-    protocol            = "HTTP"
-    matcher             = "200"
   }
 }
 
 resource "aws_security_group" "lb_sg" {
-  name        = "lb-sg"
-  description = "Load Balancer Security Group"
+  name        = "lb_sg"
+  description = "LB security group"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
