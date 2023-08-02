@@ -13,7 +13,7 @@ on:
 jobs: 
   check:
     runs-on: 
-      labels: ubuntu-latest-8core
+      labels: ubuntu-22.04-8core
     steps:
     - uses: actions/checkout@master
     - name: Initialize submodules
