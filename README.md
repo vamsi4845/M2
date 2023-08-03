@@ -41,7 +41,7 @@ Currently, M2 consists of...
 - `sov-aptosvm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup of Aptos VM using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
 - `sov-movevm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup of Move VM using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
 - `sov-monovm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup combining both `sov-aptosvm` and `sov-movevm` namespaces using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
-  - Currently, the `sov-monovm` testnet is served at [testnet.sov-monovm.mvlabs.net](testnet.sov-monovm.mvlabs.net). As it is under heavy development, outages are common. Check our status page for know outages.
+  - Currently, the `sov-monovm` testnet is served at [testnet.sov-monovm.mvlabs.net](testnet.sov-monovm.mvlabs.net). As it is under heavy development, outages are common. Check our status page for known outages.
 
 ## Installation
 
