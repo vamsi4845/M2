@@ -36,6 +36,7 @@ impl<'a, C: sov_modules_api::Context> ChangeSetPublisher<'a, C> {
         let ap = AccessPath::new(*account_address, path.as_bytes().to_vec());
         match op {
           Op::New(data) => {
+            println!("Publishing new data: {:?}", ap);
             self.remote_cache.set(&AccessPathWrapper::new(ap), data, &mut working_set);
           },
           Op::Modify(data) => {

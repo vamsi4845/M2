@@ -61,7 +61,7 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
         let vm = self.get_vm(working_set)?;
         let resolver = self.get_mvm_store_view(working_set);
         let mut session = vm.new_session(&resolver);
-        session.execute_entry_function(
+        session.execute_function_bypass_visibility(
             &call_module_func.module_id.into(),
             &IdentStr::new(call_module_func.function_name.inner()).expect(
                 "Failed to convert function name to identifier"
@@ -69,7 +69,7 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
             call_module_func.ty_args.into_iter().map(|ty_arg| ty_arg.into()).collect(),
             call_module_func.args,
             &mut UnmeteredGasMeter{},
-        ).expect("Failed to execute entry function");
+        ).expect("Failed to execute function");
 
         let (change_set, events) = session.finish()?;
         self.get_change_set_publisher(working_set).publish(change_set)?;

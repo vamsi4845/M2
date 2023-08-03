@@ -3,8 +3,9 @@ use sov_state::WorkingSet;
 use crate::MoveVm;
 use sov_modules_api::Error;
 use move_compiler::{compiled_unit::AnnotatedCompiledUnit, Compiler};
-use move_vm_types::gas::{UnmeteredGasMeter};
+use move_vm_types::{gas::{UnmeteredGasMeter}, natives::function};
 use move_core_types::account_address::AccountAddress;
+use aptos_types::access_path::AccessPath;
 
 impl<C: sov_modules_api::Context> MoveVm<C> {
 
@@ -36,6 +37,7 @@ impl<C: sov_modules_api::Context> MoveVm<C> {
             module
                 .serialize(&mut mod_blob)
                 .expect("Module serialization error");
+            let id = module.self_id();
             session
                 .publish_module(
                     mod_blob, 

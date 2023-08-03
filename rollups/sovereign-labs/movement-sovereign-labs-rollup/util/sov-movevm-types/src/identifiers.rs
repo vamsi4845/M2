@@ -21,6 +21,14 @@ impl IdentStrWrapper {
     
 }
 
+impl IdentStrWrapper {
+
+    pub fn new (ident_str : &IdentStr) -> Self {
+        Self(ident_str.to_string())
+    }
+
+}
+
 
 #[cfg_attr(
     feature = "native",
@@ -42,6 +50,12 @@ impl BorshDeserialize for ModuleIdWrapper {
         Ok(Self(serde_json::from_slice(buf)?))
     }
     fn deserialize_reader<R>(_: &mut R) -> Result<Self, std::io::Error> where R: std::io::Read { todo!() }
+}
+
+impl ModuleIdWrapper {
+    pub fn new(module_id : ModuleId) -> Self {
+        Self(module_id)
+    }
 }
 
 impl Into<ModuleId> for ModuleIdWrapper {
@@ -75,6 +89,12 @@ impl BorshDeserialize for TypeTagWrapper {
 impl Into<TypeTag> for TypeTagWrapper {
     fn into(self) -> TypeTag {
         self.0
+    }
+}
+
+impl TypeTagWrapper {
+    pub fn new(type_tag : TypeTag) -> Self {
+        Self(type_tag)
     }
 }
 

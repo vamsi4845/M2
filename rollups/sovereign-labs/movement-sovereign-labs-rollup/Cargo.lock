@@ -340,7 +340,7 @@ dependencies = [
  "clap 4.3.19",
  "clap_complete",
  "codespan-reporting",
- "dirs",
+ "dirs 5.0.1",
  "futures",
  "hex",
  "itertools",
@@ -4560,6 +4560,15 @@ dependencies = [
 
 [[package]]
 name = "dirs"
+version = "3.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "30baa043103c9d0c2a57cf537cc2f35623889dc0d405e6c3cccfadbc81c71309"
+dependencies = [
+ "dirs-sys 0.3.7",
+]
+
+[[package]]
+name = "dirs"
 version = "5.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44c45a9d03d6676652bcb5e724c7e988de1acad23a711b5217ab9cbecbec2225"
@@ -5383,7 +5392,7 @@ version = "2.0.8"
 source = "git+https://github.com/gakonst/ethers-rs#594627dc1c3b490ba8f513f8f5e23d11448cbcf8"
 dependencies = [
  "cfg-if",
- "dirs",
+ "dirs 5.0.1",
  "dunce",
  "ethers-core 2.0.8 (git+https://github.com/gakonst/ethers-rs)",
  "futures-util",
@@ -11473,7 +11482,7 @@ dependencies = [
  "borsh",
  "bytes",
  "chrono",
- "dirs",
+ "dirs 5.0.1",
  "ethereum-types",
  "ethers",
  "ethers-contract 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -11661,6 +11670,7 @@ dependencies = [
  "aptos-types",
  "borsh",
  "bytes",
+ "dirs 3.0.2",
  "ethereum-types",
  "ethers",
  "ethers-contract 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -11671,6 +11681,7 @@ dependencies = [
  "hex",
  "jsonrpsee",
  "move-binary-format",
+ "move-compiler",
  "move-core-types",
  "move-stdlib",
  "move-vm-runtime",
@@ -11712,6 +11723,7 @@ dependencies = [
  "hex",
  "jsonrpsee",
  "move-binary-format",
+ "move-compiler",
  "move-core-types",
  "primitive-types 0.10.1",
  "revm",
@@ -12034,7 +12046,7 @@ version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "597e3a746727984cb7ea2487b6a40726cad0dbe86628e7d429aa6b8c4c153db4"
 dependencies = [
- "dirs",
+ "dirs 5.0.1",
  "fs2",
  "hex",
  "once_cell",
