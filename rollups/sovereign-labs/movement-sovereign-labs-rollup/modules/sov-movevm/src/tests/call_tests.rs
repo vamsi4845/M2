@@ -20,15 +20,10 @@ use std::fs;
 fn initialize_movevm_test()->Result<(), Error>{
 
     // working set
-    // let tmpdir = tempfile::tempdir().unwrap();
-    // Get the home directory
-    let home_path = home_dir().expect("Could not determine the home directory.");
+    let tmpdir = tempfile::tempdir().unwrap();
 
-    // Append the desired directory name
-    let tmpdir = home_path.join(".sov-movevm-test");
-
-    println!("tmpdir: {:?}", tmpdir.as_path());
-    let mut working_set = WorkingSet::new(ProverStorage::with_path(tmpdir.as_path()).unwrap());
+    println!("tmpdir: {:?}", tmpdir.path());
+    let mut working_set = WorkingSet::new(ProverStorage::with_path(tmpdir.path()).unwrap());
 
     // context
     let priv_key = DefaultPrivateKey::generate();
@@ -43,19 +38,14 @@ fn initialize_movevm_test()->Result<(), Error>{
     }, &mut working_set)?;
     
 
-    /*movevm.remote_cache.get(
-        &AccessPathWrapper::new(
-            AccessPath::code_access_path(ModuleId::new(
-                AccountAddress::ONE,
-                Identifier::from_str("error").unwrap()
-            ))
-        ), working_set
-    ).expect("Should be able to get value at path.");*/
-
-    let (ordered_rws, _) = working_set.checkpoint().freeze();
-    for rw in ordered_rws.ordered_writes.iter() {
-        println!("rw: {:?}", rw);
-    }
+    let path = AccessPath::code_access_path(ModuleId::new(
+        AccountAddress::ONE,
+        Identifier::from_str("error").unwrap()
+    ));
+    println!("Getting path: {:?}", path);
+    movevm.remote_cache.get(
+        &AccessPathWrapper::new(path), &mut working_set
+    ).expect("Should be able to get value at path.");
 
     Ok(())
 
@@ -88,8 +78,10 @@ fn movevm_test()->Result<(), Error>{
                 Identifier::from_str("error").unwrap()
             )), 
             function_name: IdentStrWrapper::new(&IdentStr::new("aborted").unwrap()), 
-            ty_args: vec![TypeTagWrapper::new(TypeTag::U64)], 
-            args: vec!["30".as_bytes().to_vec()]
+            ty_args: vec![], 
+            args: vec![
+                30_u64.to_le_bytes().to_vec()
+            ]
         })
     };
 
