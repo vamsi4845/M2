@@ -8,7 +8,8 @@ members = [
     "rollup-config",
     "util/sov-movevm-types",
     "util/working-set-move-resolver",
-    "util/working-set-change-set-publisher"
+    "util/working-set-change-set-publisher",
+    "util/working-set-aptos-state-view"
 ]
 
 [workspace.package]
@@ -117,3 +118,4 @@ move-compiler = { path = "../aptos-core/third_party/move/move-compiler" }
 sov-movevm-types = { path = "./util/sov-movevm-types" }
 working-set-move-resolver = { path = "./util/working-set-move-resolver" }
 working-set-change-set-publisher = { path = "./util/working-set-change-set-publisher" }
+working-set-aptos-state-view = { path = "./util/working-set-aptos-state-view" }

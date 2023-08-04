@@ -11500,12 +11500,14 @@ dependencies = [
  "serde_json",
  "sov-modules-api",
  "sov-modules-macros",
+ "sov-movevm-types",
  "sov-rollup-interface",
  "sov-state",
  "tempfile",
  "thiserror",
  "tokio",
  "tracing",
+ "working-set-aptos-state-view",
 ]
 
 [[package]]
@@ -11710,6 +11712,7 @@ dependencies = [
  "anvil",
  "anvil-core",
  "anyhow",
+ "aptos-state-view",
  "aptos-types",
  "borsh",
  "bytes",
@@ -13721,6 +13724,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "working-set-aptos-state-view"
+version = "0.1.0"
+dependencies = [
+ "anvil",
+ "anvil-core",
+ "anyhow",
+ "aptos-state-view",
+ "aptos-types",
+ "borsh",
+ "bytes",
+ "ethereum-types",
+ "ethers",
+ "ethers-contract 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-core 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-middleware 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-providers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ethers-signers 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex",
+ "jsonrpsee",
+ "move-binary-format",
+ "move-core-types",
+ "move-stdlib",
+ "move-vm-runtime",
+ "move-vm-types",
+ "primitive-types 0.10.1",
+ "revm",
+ "serde 1.0.180",
+ "serde_json",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-movevm-types",
+ "sov-rollup-interface",
+ "sov-state",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "working-set-move-resolver",
+]
+
+[[package]]
 name = "working-set-change-set-publisher"
 version = "0.1.0"
 dependencies = [
@@ -13767,6 +13811,7 @@ dependencies = [
  "anvil-core",
  "anyhow",
  "aptos-types",
+ "aptos-vm",
  "borsh",
  "bytes",
  "ethereum-types",

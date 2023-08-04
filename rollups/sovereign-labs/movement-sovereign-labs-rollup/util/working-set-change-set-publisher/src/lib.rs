@@ -1,5 +1,6 @@
 use aptos_types::account_config::resources;
-use move_core_types::effects::{ChangeSet, Op};
+use ethers_core::k256::sha2::digest::typenum::Mod;
+use move_core_types::{effects::{ChangeSet, Op}, language_storage::ModuleId};
 use sov_state::{WorkingSet, StateMap};
 use sov_movevm_types::identifiers::AccessPathWrapper;
 use std::cell::RefCell;
@@ -28,15 +29,16 @@ impl<'a, C: sov_modules_api::Context> ChangeSetPublisher<'a, C> {
     let mut working_set = self.working_set.borrow_mut();
     for (account_address, account_changes) in change_set.accounts().iter() {
 
-
       let (modules, resources) = account_changes.to_owned().into_inner(); // owning better than cloning
 
       // modules
       for (path, op) in modules.iter() {
-        let ap = AccessPath::new(*account_address, path.as_bytes().to_vec());
+        let ap = AccessPath::code_access_path(ModuleId::new(
+          account_address.clone(),
+          path.clone()
+        ));
         match op {
           Op::New(data) => {
-            println!("Publishing new data: {:?}", ap);
             self.remote_cache.set(&AccessPathWrapper::new(ap), data, &mut working_set);
           },
           Op::Modify(data) => {

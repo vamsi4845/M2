@@ -37,6 +37,7 @@ use aptos_types::transaction::{Transaction};
 use aptos_types::trusted_state::{TrustedState, TrustedStateChange};
 
 use borsh::{BorshDeserialize, BorshSerialize};
+use sov_movevm_types::aptos::transaction::{TransactionWrapper};
 
 
 
@@ -48,6 +49,8 @@ use borsh::{BorshDeserialize, BorshSerialize};
 #[derive(borsh::BorshDeserialize, borsh::BorshSerialize, Debug, PartialEq, Clone)]
 pub struct CallMessage {
     pub serialized_txs: Vec<Vec<u8>>,
+    #[cfg(feature = "naked")]
+    pub tx : TransactionWrapper,
 }
 
 impl<C: sov_modules_api::Context> AptosVm<C> {

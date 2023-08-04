@@ -48,6 +48,7 @@ move-stdlib = { workspace = true}
 move-vm-types = { workspace = true }
 
 sov-movevm-types = { workspace = true }
+aptos-vm = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }
