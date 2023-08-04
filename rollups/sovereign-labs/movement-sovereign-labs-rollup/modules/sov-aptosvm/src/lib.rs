@@ -30,6 +30,7 @@ mod aptos {
     use aptos_executor_types::BlockExecutorTrait;
     use aptos_vm::AptosVM;
     use aptos_crypto::{HashValue};
+    use working_set_aptos_state_view::WorkingSetAptosStateView;
     // use anyhow::{Error};
 
     use borsh::{BorshDeserialize, BorshSerialize};
@@ -220,6 +221,7 @@ mod aptos {
             Error
         > {
 
+            AptosVM::new();
             unimplemented!("Get aptos vm is not implemented!")
 
         }

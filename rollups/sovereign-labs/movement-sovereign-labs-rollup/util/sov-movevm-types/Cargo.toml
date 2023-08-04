@@ -44,6 +44,7 @@ move-core-types = { workspace = true, version = "0.0.4" }
 move-binary-format = { workspace = true }
 aptos-types = { workspace = true }
 move-compiler = { workspace = true }
+aptos-state-view = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }
