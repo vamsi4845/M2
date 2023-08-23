@@ -49,6 +49,9 @@ move-vm-types = { workspace = true }
 
 sov-movevm-types = { workspace = true }
 aptos-vm = { workspace = true }
+move-table-extension = { workspace = true}
+aptos-framework = { workspace = true}
+aptos-state-view = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }

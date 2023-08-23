@@ -113,6 +113,7 @@ move-binary-format = { path = "../aptos-core/third_party/move/move-binary-format
 move-vm-runtime = { path = "../aptos-core/third_party/move/move-vm/runtime" }
 move-stdlib = { path = "../aptos-core/third_party/move/move-stdlib" }
 move-compiler = { path = "../aptos-core/third_party/move/move-compiler" }
+move-table-extension = { path = "../aptos-core/third_party/move/extensions/move-table-extension" }
 
 # internal
 sov-movevm-types = { path = "./util/sov-movevm-types" }

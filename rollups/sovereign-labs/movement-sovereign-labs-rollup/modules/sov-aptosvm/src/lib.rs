@@ -31,9 +31,14 @@ mod aptos {
     use aptos_vm::AptosVM;
     use aptos_crypto::{HashValue};
     use working_set_aptos_state_view::WorkingSetAptosStateView;
+
+    use sov_movevm_types::aptos::identifiers::StateKeyWrapper;
+    use sov_movevm_types::aptos::state::StateValueWrapper;
     // use anyhow::{Error};
 
     use borsh::{BorshDeserialize, BorshSerialize};
+
+    use working_set_aptos_state_view::WorkingSetAptosStateView;
 
     use std::sync::Arc;
 
@@ -73,6 +78,9 @@ mod aptos {
         // #[cfg(feature = "aptos-consensus")]
         #[state]
         pub(crate) known_version : sov_state::StateValue<u64>,
+
+        #[state]
+        pub(crate) remote_cache : sov_state::StateMap<StateKeyWrapper, StateValueWrapper>,
 
     }
 
@@ -221,8 +229,10 @@ mod aptos {
             Error
         > {
 
-            AptosVM::new();
-            unimplemented!("Get aptos vm is not implemented!")
+            Ok(AptosVM::new(&WorkingSetAptosStateView::new(
+                self.remote_cache,
+                working_set,
+            )))
 
         }
 
