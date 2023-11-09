@@ -13,6 +13,10 @@
 
 **L2s for Move VM.**
 
+## :warning: Important Disclaimer
+
+The M2 repository is currently **deprecated** as we are in the process of a major redesign. This is to enhance and integrate with the forthcoming Movement SDK, which promises to deliver an even more robust and flexible ecosystem for our users. We appreciate your understanding and are excited to share the new features soon!
+
 </div>
 
 
