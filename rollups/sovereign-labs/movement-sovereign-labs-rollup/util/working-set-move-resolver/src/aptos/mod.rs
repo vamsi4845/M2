@@ -58,13 +58,12 @@ impl<'a, C: sov_modules_api::Context> ResourceResolver for WorkingSetAptosMoveRe
     
     let mut working_set = self.working_set.borrow_mut();
 
-    let res = self.remote_cache.get(
-      &StateKeyWrapper::new(
-          StateKey::access_path(ap)
-      ), &mut working_set);
-
-    Ok((res, 0))
-
+    match self.remote_cache.get(&StateKeyWrapper::new(
+      StateKey::access_path(ap)
+    ), &mut working_set) {
+      Some(val) => Ok((Some(serde_json::to_vec(&val)?), 0)),
+      None => Ok((None, 0))
+    }
 
   }
 }
@@ -85,7 +84,12 @@ impl<'a, C: sov_modules_api::Context> ModuleResolver for WorkingSetAptosMoveReso
   fn get_module(&self, module_id: &ModuleId) -> Result<Option<Vec<u8>>, Error> {
     let ap = AccessPath::from(module_id);
     let mut working_set = self.working_set.borrow_mut();
-    Ok(self.remote_cache.get(&AccessPathWrapper::new(ap), &mut working_set))
+    match self.remote_cache.get(&StateKeyWrapper::new(
+      StateKey::access_path(ap)
+    ), &mut working_set) {
+      Some(val) => Ok(Some(serde_json::to_vec(&val)?)),
+      None => Ok(None)
+    }
   }
 }
 
@@ -132,17 +136,75 @@ impl<'a, C: sov_modules_api::Context> TStateView for WorkingSetAptosMoveResolver
 
 
 impl<'a, C: sov_modules_api::Context> TableResolver for WorkingSetAptosMoveResolverExt<'a, C> {
+
+  fn resolve_table_entry(
+          &self,
+          handle: &move_table_extension::TableHandle,
+          key: &[u8],
+      ) -> Result<Option<Vec<u8>>, anyhow::Error> {
+          let mut working_set = self.working_set.borrow_mut();
+          let account_address = handle.0;
+          let ap = AccessPath::new(account_address, key.to_vec());
+          let state_key_wrapper = StateKeyWrapper::new(
+            StateKey::access_path(ap)
+          );
+          let state_value_wrapper = self.remote_cache.get(&state_key_wrapper, &mut working_set);
+          match state_value_wrapper {
+              Some(state_value_wrapper) => {
+                  let state_value : StateValue = state_value_wrapper.into();
+                  Ok(Some(state_value.into_bytes()))
+              },
+              None => Ok(None)
+          }
+  }
     
 }
 
 impl<'a, C: sov_modules_api::Context> StateStorageUsageResolver for WorkingSetAptosMoveResolverExt<'a, C> {
     
+
+  fn get_state_storage_usage(&self) -> anyhow::Result<aptos_types::state_store::state_storage_usage::StateStorageUsage> {
+      
+    Ok(aptos_types::state_store::state_storage_usage::StateStorageUsage::Untracked)
+
+  }
+
 }
 
 impl<'a, C: sov_modules_api::Context> ConfigStorage for WorkingSetAptosMoveResolverExt<'a, C> {
+
+  fn fetch_config(&self, access_path: AccessPath) -> Option<Vec<u8>> {
+      None
+  }
     
 }
 
 impl<'a, C: sov_modules_api::Context> MoveResolverExt for WorkingSetAptosMoveResolverExt<'a, C> {
+
+  fn get_resource_group_data(
+          &self,
+          address: &AccountAddress,
+          struct_tag: &StructTag,
+      ) -> move_binary_format::errors::VMResult<Option<Vec<u8>>> {
+      unimplemented!("get_resource_group_data is not yet supported.")
+  }
+
+  fn get_standard_resource(
+          &self,
+          address: &AccountAddress,
+          struct_tag: &StructTag,
+      ) -> move_binary_format::errors::VMResult<Option<Vec<u8>>> {
+        unimplemented!("get_standard_resource is not yet supported.")
+  }
+
+  fn is_resource_group(&self, struct_tag: &StructTag) -> bool {
+      false
+  }
+
+  fn release_resource_group_cache(
+          &self,
+      ) -> std::collections::BTreeMap<AccountAddress, std::collections::BTreeMap<StructTag, std::collections::BTreeMap<StructTag, Vec<u8>>>> {
+      unimplemented!("release_resource_group_cache is not yet supported.")
+  }
     
 }
