@@ -24,46 +24,46 @@ rust-version = "1.66"
 
 [workspace.dependencies]
 # aptos
-aptos-api = { path = "../aptos-core/api" }
-aptos-api-types = { path = "../aptos-core/api/types" }
-aptos-mempool = { path = "../aptos-core/mempool" }
-aptos-crypto = { path = "../aptos-core/crates/aptos-crypto" }
-aptos-db = { path = "../aptos-core/storage/aptosdb" }
-aptos-executor = { path = "../aptos-core/execution/executor" }
-aptos-executor-types = { path = "../aptos-core/execution/executor-types" }
-aptos-sdk = { path = "../aptos-core/sdk" }
-aptos-types = { path = "../aptos-core/types" }
-aptos-vm = { path = "../aptos-core/aptos-move/aptos-vm" }
-aptos-vm-genesis = { path = "../aptos-core/aptos-move/vm-genesis" }
-aptos-state-view = { path = "../aptos-core/storage/state-view" }
-aptos-storage-interface = { path = "../aptos-core/storage/storage-interface" }
-aptos-framework = { path = "../aptos-core/aptos-move/framework" }
-aptos-executor-test-helpers = { path = "../aptos-core/execution/executor-test-helpers" }
-aptos-consensus-types = { path = "../aptos-core/consensus/consensus-types"}
+aptos-api = { path = "../../../vendors/aptos-core/api" }
+aptos-api-types = { path = "../../../vendors/aptos-core/api/types" }
+aptos-mempool = { path = "../../../vendors/aptos-core/mempool" }
+aptos-crypto = { path = "../../../vendors/aptos-core/crates/aptos-crypto" }
+aptos-db = { path = "../../../vendors/aptos-core/storage/aptosdb" }
+aptos-executor = { path = "../../../vendors/aptos-core/execution/executor" }
+aptos-executor-types = { path = "../../../vendors/aptos-core/execution/executor-types" }
+aptos-sdk = { path = "../../../vendors/aptos-core/sdk" }
+aptos-types = { path = "../../../vendors/aptos-core/types" }
+aptos-vm = { path = "../../../vendors/aptos-core/aptos-move/aptos-vm" }
+aptos-vm-genesis = { path = "../../../vendors/aptos-core/aptos-move/vm-genesis" }
+aptos-state-view = { path = "../../../vendors/aptos-core/storage/state-view" }
+aptos-storage-interface = { path = "../../../vendors/aptos-core/storage/storage-interface" }
+aptos-framework = { path = "../../../vendors/aptos-core/aptos-move/framework" }
+aptos-executor-test-helpers = { path = "../../../vendors/aptos-core/execution/executor-test-helpers" }
+aptos-consensus-types = { path = "../../../vendors/aptos-core/consensus/consensus-types"}
 
 
 # sovereign-sdk
-sov-rollup-interface = { path = "../sovereign-sdk/rollup-interface" }
-risc0-adapter = { path = "../sovereign-sdk/adapters/risc0" }
-jupiter = { path = "../sovereign-sdk/adapters/celestia" }
-sov-modules-stf-template = { path = "../sovereign-sdk/module-system/sov-modules-stf-template" }
-sov-modules-macros = { path = "../sovereign-sdk/module-system/sov-modules-macros" }
-sov-state = { path = "../sovereign-sdk/module-system/sov-state" }
-sov-modules-api = { path = "../sovereign-sdk/module-system/sov-modules-api" }
-sov-first-read-last-write-cache = { path = "../sovereign-sdk/module-system/utils/sov-first-read-last-write-cache" }
+sov-rollup-interface = { path = "../../../vendors/sovereign-sdk/rollup-interface" }
+risc0-adapter = { path = "../../../vendors/sovereign-sdk/adapters/risc0" }
+jupiter = { path = "../../../vendors/sovereign-sdk/adapters/celestia" }
+sov-modules-stf-template = { path = "../../../vendors/sovereign-sdk/module-system/sov-modules-stf-template" }
+sov-modules-macros = { path = "../../../vendors/sovereign-sdk/module-system/sov-modules-macros" }
+sov-state = { path = "../../../vendors/sovereign-sdk/module-system/sov-state" }
+sov-modules-api = { path = "../../../vendors/sovereign-sdk/module-system/sov-modules-api" }
+sov-first-read-last-write-cache = { path = "../../../vendors/sovereign-sdk/module-system/utils/sov-first-read-last-write-cache" }
 
-sov-value-setter = { path = "../sovereign-sdk/module-system/module-implementations/examples/sov-value-setter" }
-sov-accounts = { path = "../sovereign-sdk/module-system/module-implementations/sov-accounts"}
-sov-sequencer-registry = { path = "../sovereign-sdk/module-system/module-implementations/sov-sequencer-registry"}
+sov-value-setter = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/examples/sov-value-setter" }
+sov-accounts = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/sov-accounts"}
+sov-sequencer-registry = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/sov-sequencer-registry"}
 
-sov-db = { path = "../sovereign-sdk/full-node/db/sov-db" }
-sov-schema-db = { path = "../sovereign-sdk/full-node/db/sov-schema-db"}
-sov-ethereum = { path = "../sovereign-sdk/full-node/sov-ethereum" }
-sov-sequencer = { path = "../sovereign-sdk/full-node/sov-sequencer" }
-sov-evm = { path = "../sovereign-sdk/module-system/module-implementations/sov-evm"}
+sov-db = { path = "../../../vendors/sovereign-sdk/full-node/db/sov-db" }
+sov-schema-db = { path = "../../../vendors/sovereign-sdk/full-node/db/sov-schema-db"}
+sov-ethereum = { path = "../../../vendors/sovereign-sdk/full-node/sov-ethereum" }
+sov-sequencer = { path = "../../../vendors/sovereign-sdk/full-node/sov-sequencer" }
+sov-evm = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/sov-evm"}
 
-sov-bank = { path = "../sovereign-sdk/module-system/module-implementations/sov-bank" }
-sov-election = { path = "../sovereign-sdk/module-system/module-implementations/examples/sov-election" }
+sov-bank = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/sov-bank" }
+sov-election = { path = "../../../vendors/sovereign-sdk/module-system/module-implementations/examples/sov-election" }
 
 # sovereign workspace
 # Dependencies maintained by sovereign
@@ -103,17 +103,17 @@ anvil  = { git = "https://github.com/foundry-rs/foundry", version = "0.1.0" }
 anvil-core = { git = "https://github.com/foundry-rs/foundry", features = ["fastrlp", "serde"], version = "0.1.0" }
 
 # aptos testing (create_publish_module)
-e2e-move-tests = { path = "../aptos-core/aptos-move/e2e-move-tests" }
+e2e-move-tests = { path = "../../../vendors/aptos-core/aptos-move/e2e-move-tests" }
 
 # move
 # TODO: change to move submodule for better versioning
-move-core-types = { path = "../aptos-core/third_party/move/move-core/types", version = "0.0.4" }
-move-vm-types = { path = "../aptos-core/third_party/move/move-vm/types" }
-move-binary-format = { path = "../aptos-core/third_party/move/move-binary-format" }
-move-vm-runtime = { path = "../aptos-core/third_party/move/move-vm/runtime" }
-move-stdlib = { path = "../aptos-core/third_party/move/move-stdlib" }
-move-compiler = { path = "../aptos-core/third_party/move/move-compiler" }
-move-table-extension = { path = "../aptos-core/third_party/move/extensions/move-table-extension" }
+move-core-types = { path = "../../../vendors/aptos-core/third_party/move/move-core/types", version = "0.0.4" }
+move-vm-types = { path = "../../../vendors/aptos-core/third_party/move/move-vm/types" }
+move-binary-format = { path = "../../../vendors/aptos-core/third_party/move/move-binary-format" }
+move-vm-runtime = { path = "../../../vendors/aptos-core/third_party/move/move-vm/runtime" }
+move-stdlib = { path = "../../../vendors/aptos-core/third_party/move/move-stdlib" }
+move-compiler = { path = "../../../vendors/aptos-core/third_party/move/move-compiler" }
+move-table-extension = { path = "../../../vendors/aptos-core/third_party/move/extensions/move-table-extension" }
 
 # internal
 sov-movevm-types = { path = "./util/sov-movevm-types" }
