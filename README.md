@@ -13,6 +13,10 @@
 
 **L2s for Move VM.**
 
+## :warning: Important Disclaimer
+
+The M2 repository is currently **deprecated** as we are in the process of a major redesign. This is to enhance and integrate with the forthcoming Movement SDK, which promises to deliver an even more robust and flexible ecosystem for our users. We appreciate your understanding and are excited to share the new features soon!
+
 </div>
 
 
@@ -41,7 +45,7 @@ Currently, M2 consists of...
 - `sov-aptosvm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup of Aptos VM using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
 - `sov-movevm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup of Move VM using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
 - `sov-monovm`: a [Sovereign Labs](https://github.com/Sovereign-Labs/sovereign-sdk) rollup combining both `sov-aptosvm` and `sov-movevm` namespaces using [Celestia DA](https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/).
-  - Currently, the `sov-monovm` testnet is served at [testnet.sov-monovm.mvlabs.net](testnet.sov-monovm.mvlabs.net). As it is under heavy development, outages are common. Check our status page for know outages.
+  - Currently, the `sov-monovm` testnet is served at [testnet.sov-monovm.mvlabs.net](testnet.sov-monovm.mvlabs.net). As it is under heavy development, outages are common. Check our status page for known outages.
 
 ## Installation
 
