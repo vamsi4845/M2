@@ -1,20 +1,20 @@
 [submodule "rollups/sovereign-labs/sovereign-sdk"]
-	path = rollups/sovereign-labs/sovereign-sdk
+	path = vendors/sovereign-sdk
 	url = https://github.com/movemntdev/sovereign-sdk
 [submodule "rollups/sovereign-labs/aptos-core"]
-	path = rollups/sovereign-labs/aptos-core
+	path = vendors/aptos-core
 	url = https://github.com/movemntdev/aptos-core
 	branch = sovereign-labs-rollup
 [submodule "rollups/sovereign-labs/move"]
-	path = rollups/sovereign-labs/move
+	path = vendors/move
 	url = https://github.com/movemntdev/move
 	branch = sovereign-labs-rollup
 [submodule "rollups/sovereign-labs/x25519-dalek"]
-	path = rollups/sovereign-labs/x25519-dalek
+	path = vendors/x25519-dalek
 	url = https://github.com/movemntdev/x25519-dalek
 
 [submodule "rollups/sovereign-labs/move-sov-risc0"]
-	path = rollups/sovereign-labs/move-sov-risc0
+	path = vendors/move-risc0
 	url = https://github.com/movemntdev/move
 	branch = sov-risc0
 [submodule "rsc/testing_resources/movement-hack"]
