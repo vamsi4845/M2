@@ -10,9 +10,6 @@ use ethers::{abi::Address, signers::Signer, types::Signature};
 use sequencer::VmTransaction;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct AptosTransaction(pub Vec<u8>);
-
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Transaction {
