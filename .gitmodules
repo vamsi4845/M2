@@ -20,3 +20,6 @@
 [submodule "rsc/testing_resources/movement-hack"]
 	path = rsc/testing_resources/movement-hack
 	url = https://github.com/movemntdev/movement-hack
+[submodule "vendors/espresso-sequencer"]
+	path = vendors/espresso-sequencer
+	url = https://github.com/EspressoSystems/espresso-sequencer

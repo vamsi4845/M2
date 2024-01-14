@@ -55,7 +55,6 @@ pub struct CallMessage {
 impl<C: sov_modules_api::Context> AptosVm<C> {
 
 
-
     pub(crate) fn execute_call_with_naked_vm(
         &self,
         tx: TransactionWrapper,
