@@ -37,7 +37,7 @@ The Move programming language poses numerous benefits to builders including dire
 
 Movement M2 is an ecosystem of Layer 2 technologies for developing L2 smart contracts.
 
-This repository contains the code and contributor documentation for M2. If you would like to learn how to use and develop for the platform, please visit [docs.movementlabs.xyx](docs.movementlabs.xyz).
+This repository contains the code and contributor documentation for M2. If you would like to learn how to use and develop for the platform, please visit [docs.movementlabs.xyz](docs.movementlabs.xyz).
 
 ## Features
 
@@ -49,7 +49,7 @@ Currently, M2 consists of...
 
 ## Installation
 
-See [docs.movementlabs.xyx](docs.movementlabs.xyz) for a more complete installation guide. We recommend working with our Docker containers or using our installer.
+See [docs.movementlabs.xyz](docs.movementlabs.xyz) for a more complete installation guide. We recommend working with our Docker containers or using our installer.
 
 ## Usage
 
